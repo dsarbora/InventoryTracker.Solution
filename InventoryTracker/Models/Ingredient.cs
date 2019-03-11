@@ -143,5 +143,21 @@ namespace InventoryTracker.Models
                 conn.Dispose();
             }            
         }
+        
+        public override bool Equals(System.Object otherIngredient)
+        {
+            if(!(otherIngredient is Ingredient))
+            {
+                return false;
+            }
+            else
+            {
+                Ingredient newIngredient = (Ingredient)otherIngredient;
+                bool idEquality = this.GetId().Equals(newIngredient.GetId());
+                bool nameEquality = this.GetId().Equals(newIngredient.GetName());
+                bool quantityEquality = this.GetQuantity().Equals(newIngredient.GetQuantity());
+                return (idEquality && nameEquality && quantityEquality);
+            }
+        }
     }
 }
