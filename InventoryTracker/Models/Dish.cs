@@ -24,7 +24,7 @@ namespace InventoryTracker.Models
             return Id;
         }
 
-        public void ClearAll()
+        public static void ClearAll()
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
