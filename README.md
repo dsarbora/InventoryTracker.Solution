@@ -28,10 +28,6 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|recipe_id INT|ingredient_id INT|
 |------:|:-------------:|-----------------|
-|0|3|1|
-|1|3|2|
-|2|1|0|
-|3|1|2|
 
 ------
 
@@ -39,9 +35,7 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|ingredient_id|shipment_id|
 |-----------------|------|----|
-|0|0|0|
-|0|1|0|
-|0|2|0|
+
 
 -----
 
@@ -49,10 +43,6 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|name|
 |-----|------|
-|0| Boiled Eggs|
-|1| Spinach and meat|
-|2| Ham Salad|
-|3| Meat and potatoes|
 
 ------
 
@@ -60,7 +50,7 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|date|
 |--------------------|-----|
-|0|3/10/2019|
+
 
 -----
 
@@ -68,7 +58,6 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|name|last_date|
 |------------|---------|----|
-|0|Wash dishes|3/10/2019|
 
 -----
 
@@ -76,7 +65,6 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|employee_id|maintenance_id|
 |-----|-----|------|
-|0|1|0|
 
 -----
 
@@ -84,9 +72,7 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|name|hired_date|
 |--------------|----|-----|
-|0 | Mario Batali|3/10/2019|
-|1|Guy Fieri|3/10/2019|
-|2|Gordon Ramsey|3/10/2019|
+
 
 -----
 
@@ -94,9 +80,6 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|employee_id|position_id|
 |-------|-------|------|
-|0|0|0|
-|1|1|1|
-|2|2|2|
 
 -----
 
@@ -104,8 +87,5 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|name|
 |----|----|
-|0|Meatball maker|
-|1|Dishwasher|
-|2|Chef|
 
 -----
