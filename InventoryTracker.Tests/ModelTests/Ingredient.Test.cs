@@ -5,6 +5,7 @@ using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
 {
+    [TestClass]
     public class IngredientTest : IDisposable
     {
         public IngredientTest()
@@ -18,5 +19,30 @@ namespace InventoryTracker.Tests
             Shipment.ClearAll();
             Order.ClearAll();
         }
+
+        [TestMethod]
+        public void Save_SavesIngredientToDatabase_IngredientList()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            List<Ingredient> testList = Ingredient.GetAll();
+            List<Ingredient> allIngredients = new List<Ingredient>{newIngredient};
+            CollectionAssert.AreEqual(testList, allIngredients);
+        }
+
+        [TestMethod]
+        public void Find_FindsCorrectIngredient_True()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            Ingredient newIngredient2 = new Ingredient("carrots");
+            newIngredient2.Save();
+            Ingredient foundIngredient = Ingredient.Find(newIngredient.GetId());
+            Assert.AreEqual(newIngredient, foundIngredient);
+        }
+
+        [TestMethod]
+        public void 
+
     }
 }

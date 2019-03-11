@@ -7,6 +7,7 @@ using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
 {
+    [TestClass]
     public class ShipmentsControllerTest : IDisposable
     {
         public void Dispose()
