@@ -9,7 +9,7 @@ namespace InventoryTracker.Models
     private int Id;
     private DateTime Date;
 
-    public Shipment(int id,DateTime date)
+    public Shipment(int id, DateTime date)
     {
       Id = id;
       Date = date;
@@ -20,22 +20,19 @@ namespace InventoryTracker.Models
     }
     public DateTime GetDate()
     {
-      return date;
+      return Date;
     }
     public void Save()
     {
-      MySqlConnection conn = Db.Connection();
+      MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("INSERT INTO shipments (id, date) VALUE (@id, @date)",conn);
-      MySqlParameter prId = new MySqlParameter();
-      prId.ParameterId = "@id";
-      prId.Value = Id;
-      cmd.Parameters.Add(prId);
-      MySqlParameter prDate = new MySqlParameter();
-      prDate.ParameterId = "@date";
-      prDate.Value = Date;
-      cmd.Parameters.Add(prDate);
+      MySqlCommand cmd = new MySqlCommand("INSERT INTO shipments (date) VALUE (@date)", conn);
+      MySqlParameter prmDate = new MySqlParameter();
+      prmDate.ParameterId = "@date";
+      prmDate.Value = Date;
+      cmd.Parameters.Add(prmDate);
       cmd.ExecuteNonQuery();
+      Id=(int)cmd.LastInsertedId();
       conn.Close();
       if (conn!=null)
        {
