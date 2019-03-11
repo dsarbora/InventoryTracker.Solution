@@ -14,7 +14,7 @@ namespace InventoryTracker.Tests
         }
         public void Dispose()
         {
-            //Ingredient.ClearAll();
+            Ingredient.ClearAll();
             Dish.ClearAll();
             //Shipment.ClearAll();
             //Order.ClearAll();
@@ -23,7 +23,9 @@ namespace InventoryTracker.Tests
         public void GetName_ReturnsName_String()
         {
             string name = "Eggs and bacon";
-
+            Dish newDish = new Dish(name);
+            string result = newDish.GetName();
+            Assert.Equals(result, name);
         }
     }
 }

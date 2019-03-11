@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Sytem.Collections.Generic;
+using System.Collections.Generic;
 using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
@@ -16,8 +16,8 @@ namespace InventoryTracker.Tests
         {
             Ingredient.ClearAll();
             Dish.ClearAll();
-            Shipment.ClearAll();
-            Order.ClearAll();
+           // Shipment.ClearAll();
+           // Order.ClearAll();
         }
 
         [TestMethod]
@@ -41,8 +41,8 @@ namespace InventoryTracker.Tests
             Assert.AreEqual(newIngredient, foundIngredient);
         }
 
-        [TestMethod]
-        public void 
+        // [TestMethod]
+        // public void 
 
     }
 }
