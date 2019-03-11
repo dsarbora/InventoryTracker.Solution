@@ -40,9 +40,5 @@ namespace InventoryTracker.Tests
             Ingredient foundIngredient = Ingredient.Find(newIngredient.GetId());
             Assert.AreEqual(newIngredient, foundIngredient);
         }
-
-        // [TestMethod]
-        // public void 
-
     }
 }
