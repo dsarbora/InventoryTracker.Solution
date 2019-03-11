@@ -40,5 +40,28 @@ namespace InventoryTracker.Tests
             Ingredient foundIngredient = Ingredient.Find(newIngredient.GetId());
             Assert.AreEqual(newIngredient, foundIngredient);
         }
+
+        [TestMethod]
+        public void Edit_ChangesNameAndQuantity_True()
+        {
+            Ingredient newIngredient = new Ingredient("celry");
+            newIngredient.Save();
+            string newName = "celery";
+            int newQuantity = 10;
+            newIngredient.Edit(newName, newQuantity);
+            Ingredient manualIngredient = new Ingredient(newName, newQuantity, newIngredient.GetId());
+            Assert.AreEqual(manualIngredient, newIngredient);
+        }
+
+        [TestMethod]
+        public void Delete_DeletesIngredientFromDatabase_EmptyList()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            newIngredient.Delete();
+            List<Ingredient> allIngredients = new List<Ingredient>{};
+            List<Ingredient> testList = Ingredient.GetAll();
+            CollectionAssert.AreEqual(allIngredients, testList);
+        }
     }
 }

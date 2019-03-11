@@ -35,6 +35,7 @@ namespace InventoryTracker.Models
             prmQuantity.Value = Quantity;
             cmd.Parameters.Add(prmQuantity);
             cmd.ExecuteNonQuery();
+            Id=(int)cmd.LastInsertedId;
             conn.Close();            
             if(conn!=null)
             {
@@ -78,7 +79,7 @@ namespace InventoryTracker.Models
             while(rdr.Read())
             {
                 int id = rdr.GetInt32(0);
-                string name=rdr.GetName(1);
+                string name=rdr.GetString(1);
                 int quantity = rdr.GetInt32(2);
                 Ingredient ingredient = new Ingredient(name, quantity, id);
                 allIngredients.Add(ingredient);
@@ -104,6 +105,10 @@ namespace InventoryTracker.Models
             prmQuantity.ParameterName = "@quantity";
             prmQuantity.Value = quantity;
             cmd.Parameters.Add(prmQuantity);
+            MySqlParameter prmId = new MySqlParameter();
+            prmId.ParameterName = "@id";
+            prmId.Value = Id;
+            cmd.Parameters.Add(prmId);
             cmd.ExecuteNonQuery();
             Name = name;
             Quantity = quantity;
@@ -152,6 +157,7 @@ namespace InventoryTracker.Models
             }
             else
             {
+                return true;
                 Ingredient newIngredient = (Ingredient)otherIngredient;
                 bool idEquality = this.GetId().Equals(newIngredient.GetId());
                 bool nameEquality = this.GetId().Equals(newIngredient.GetName());
