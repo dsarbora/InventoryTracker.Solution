@@ -2,7 +2,7 @@ using System;
 using MySql.Data.MySqlClient;
 using InventoryTracker;
 
-namespace InventoryTracker.Models;
+namespace InventoryTracker.Models
 {
     public class DB
     {
