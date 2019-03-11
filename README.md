@@ -20,9 +20,7 @@ restaurant and restaurant_test are identical in structure.
 
 |id PRIMARY KEY++|name VARCHAR|expiration|
 |------:|----------|--------------------------|
-|0      |Spinach   | 3/17/2019 |
-|1      |Potatoes  | 3/31/2019|
-|2      |Meat      | 3/17/2019|
+
 
 -----
 
