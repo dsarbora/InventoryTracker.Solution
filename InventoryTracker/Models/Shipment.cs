@@ -26,7 +26,7 @@ namespace InventoryTracker.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("INSERT INTO shipments (date) VALUE (@date)", conn);
+      MySqlCommand cmd = new MySqlCommand("INSERT INTO shipments (date) VALUES (@date)", conn);
       MySqlParameter prmDate = new MySqlParameter();
       prmDate.ParameterName = "@date";
       prmDate.Value = Date;
