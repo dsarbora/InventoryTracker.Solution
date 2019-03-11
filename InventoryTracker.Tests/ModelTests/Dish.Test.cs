@@ -5,6 +5,7 @@ using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
 {
+    [TestClass]
     public class DishTest : IDisposable
     {
         public DishTest()
@@ -13,10 +14,16 @@ namespace InventoryTracker.Tests
         }
         public void Dispose()
         {
-            Ingredient.ClearAll();
+            //Ingredient.ClearAll();
             Dish.ClearAll();
-            Shipment.ClearAll();
-            Order.ClearAll();
+            //Shipment.ClearAll();
+            //Order.ClearAll();
+        }
+        [TestMethod]
+        public void GetName_ReturnsName_String()
+        {
+            string name = "Eggs and bacon";
+            
         }
     }
 }
