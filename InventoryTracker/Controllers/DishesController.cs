@@ -13,5 +13,17 @@ namespace InventoryTracker.Controllers
       List <Dish> allDish = Dish.GetAll();
       return View(allDish);
     }
+    [HttpGet("/dishes/new")]
+    public ActionResult New()
+    {
+      return View();
+    }
+
+
+
+
+
+
+
     }
 }

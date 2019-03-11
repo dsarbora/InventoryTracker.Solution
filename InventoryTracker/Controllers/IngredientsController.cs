@@ -13,5 +13,10 @@ namespace InventoryTracker.Controllers
       List <Ingredient> allIngredient = Ingredient.GetAll();
       return View(allIngredient);
     }
+    [HttpGet("/ingredients/new")]
+    public ActionResult New()
+    {
+      return View();
+    }
   }
 }

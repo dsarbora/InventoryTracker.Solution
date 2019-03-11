@@ -14,6 +14,11 @@
 //       List <Order> allOrder = Order.Getall();
 //       return View(allOrder);
 //     }
+      [HttpGet("/orders/new")]
+      public ActionResult New()
+      {
+        return View();
+      }
 //
 //   }
 // }
