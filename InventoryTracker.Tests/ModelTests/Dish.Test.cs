@@ -23,9 +23,81 @@ namespace InventoryTracker.Tests
         public void GetName_ReturnsName_String()
         {
             string name = "Eggs and bacon";
-            Dish newDish = new Dish(name);
+            int id = 0;
+            Dish newDish = new Dish(name, id);
             string result = newDish.GetName();
-            Assert.Equals(result, name);
+            Assert.AreEqual(result, name);
+        }
+
+        [TestMethod]
+        public void GetId_ReturnsId_Int()
+        {
+            string name = "Eggs and bacon";
+            int id = 0;
+            Dish newDish = new Dish(name, id);
+            int result = newDish.GetId();
+            Assert.AreEqual(result, id);
+        }
+
+        [TestMethod]
+        public void Equals_ReturnsTrueIfDishesAreTheSame_Ture()
+        {
+            string name = "Eggs and bacon";
+            int id = 1;
+            Dish firstDish = new Dish(name, id);
+            Dish secondDish = new Dish(name, id);
+            Assert.AreEqual(firstDish, secondDish);
+        }
+
+        [TestMethod]
+        public void Save_SavesDishToDatabase_Dish()
+        {
+            string name = "Eggs and bacon";
+            int id = 1;
+            Dish newDish = new Dish(name, id);
+            newDish.Save();
+
+            List<Dish> testList = new List<Dish>{newDish};
+            List<Dish> result = Dish.GetAll();
+            CollectionAssert.AreEqual(testList, result);
+        }
+
+        [TestMethod]
+        public void Find_FindsDishInDatabase_Dish()
+        {
+            string name = "Eggs and bacon";
+            Dish newDish = new Dish(name);
+            newDish.Save();
+            int id = newDish.GetId();
+
+            Dish testDish = Dish.Find(id);
+            Assert.AreEqual(newDish, testDish);
+        }
+
+        [TestMethod]
+        public void Edit_EditsDishInDatabase_Dish()
+        {
+            string name = "Eggs and bacon";
+            Dish newDish = new Dish(name);
+            newDish.Save();
+
+            string newName = "Eggs";
+            newDish.Edit(newName);
+
+            Dish testDish = Dish.GetAll()[0];
+            Assert.AreEqual(newDish, testDish);
+        }
+
+        [TestMethod]
+        public void Delete_DeletesDishFromDatabase_EmptyList()
+        {
+            string name = "Eggs";
+            Dish newDish = new Dish(name);
+            newDish.Save();
+            newDish.Delete();
+            List<Dish> testList = new List<Dish> {};
+            List<Dish> result = Dish.GetAll();
+            CollectionAssert.AreEqual(testList, result);
         }
     }
 }
