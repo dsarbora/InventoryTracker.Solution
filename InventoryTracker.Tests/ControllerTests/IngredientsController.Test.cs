@@ -7,6 +7,7 @@ using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
 {
+    [TestClass]
     public class IngredientsControllerTest : IDisposable
     {
         public void Dispose()
@@ -16,5 +17,8 @@ namespace InventoryTracker.Tests
             Shipment.ClearAll();
             Order.ClearAll();
         }
+
+        
+
     }
 }

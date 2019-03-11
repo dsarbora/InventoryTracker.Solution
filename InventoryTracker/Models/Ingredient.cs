@@ -70,12 +70,48 @@ namespace InventoryTracker.Models
 
         public static List<Ingredient> GetAll()
         {
-
+            List<Ingredient> allIngredients = new List<Ingredient>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients;", conn);
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while(rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name=rdr.GetName(1);
+                int quantity = rdr.GetInt32(2);
+                Ingredient ingredient = new Ingredient(name, quantity, id);
+                allIngredients.Add(ingredient);
+            }
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+            return allIngredients;
         }
 
-        public void Edit()
+        public void Edit(string name, int quantity)
         {
-
+            MySqlConnection conn=DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("UPDATE ingredients SET name=@name, quantity=@quantity WHERE id = @id;", conn);
+            MySqlParameter prmName = new MySqlParameter();
+            prmName.ParameterName = "@name";
+            prmName.Value = name;
+            cmd.Parameters.Add(prmName);
+            MySqlParameter prmQuantity = new MySqlParameter();
+            prmQuantity.ParameterName = "@quantity";
+            prmQuantity.Value = quantity;
+            cmd.Parameters.Add(prmQuantity);
+            cmd.ExecuteNonQuery();
+            Name = name;
+            Quantity = quantity;
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
         }
 
         public void Delete()
