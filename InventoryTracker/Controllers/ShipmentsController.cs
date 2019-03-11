@@ -13,6 +13,11 @@
 //           List <Shipment> allShipment = Shipment.Getall();
 //           return View(allShipment);
 //         }
+        [HttpGet("/shipments/new")]
+        public ActionResult New()
+        {
+          return View();
+        }
 //
 //   }
 // }
