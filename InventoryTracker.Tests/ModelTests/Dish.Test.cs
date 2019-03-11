@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Sytem.Collections.Generic;
+using System.Collections.Generic;
 using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
@@ -23,7 +23,7 @@ namespace InventoryTracker.Tests
         public void GetName_ReturnsName_String()
         {
             string name = "Eggs and bacon";
-            
+
         }
     }
 }
