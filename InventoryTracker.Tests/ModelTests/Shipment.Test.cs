@@ -5,6 +5,7 @@ using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
 {
+    [TestClass]
     public class ShipmentTest : IDisposable
     {
         public ShipmentTest()

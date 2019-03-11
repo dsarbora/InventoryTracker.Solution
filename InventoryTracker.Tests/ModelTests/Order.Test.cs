@@ -5,6 +5,7 @@ using InventoryTracker.Models;
 
 namespace InventoryTracker.Tests
 {
+    [TestClass]
     public class OrderTest : IDisposable
     {
         public OrderTest()
