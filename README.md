@@ -18,7 +18,7 @@ restaurant and restaurant_test are identical in structure.
 
 **ingredients:**
 
-|id PRIMARY KEY++|name VARCHAR|expiration|
+|id PRIMARY KEY++|name VARCHAR|expiration DATE|
 |------:|----------|--------------------------|
 
 
@@ -33,7 +33,7 @@ restaurant and restaurant_test are identical in structure.
 
 **ingredient_shipment**
 
-|id PRIMARY KEY++|ingredient_id|shipment_id|
+|id PRIMARY KEY++|ingredient_id INT|shipment_id INT|
 |-----------------|------|----|
 
 
@@ -41,14 +41,14 @@ restaurant and restaurant_test are identical in structure.
 
 **recipes**
 
-|id PRIMARY KEY++|name|
+|id PRIMARY KEY++|name VARCHAR|
 |-----|------|
 
 ------
 
 **shipments**
 
-|id PRIMARY KEY++|date|
+|id PRIMARY KEY++|date DATE|
 |--------------------|-----|
 
 
@@ -56,21 +56,21 @@ restaurant and restaurant_test are identical in structure.
 
 **maint_items**
 
-|id PRIMARY KEY++|name|last_date|
+|id PRIMARY KEY++|name VARCHAR|last_date DATE|
 |------------|---------|----|
 
 -----
 
 **employee_maintenance**
 
-|id PRIMARY KEY++|employee_id|maintenance_id|
+|id PRIMARY KEY++|employee_id INT|maintenance_id INT|
 |-----|-----|------|
 
 -----
 
 **employees**
 
-|id PRIMARY KEY++|name|hired_date|
+|id PRIMARY KEY++|name VARCHAR|hired_date DATE|
 |--------------|----|-----|
 
 
@@ -78,14 +78,14 @@ restaurant and restaurant_test are identical in structure.
 
 **employee_position**
 
-|id PRIMARY KEY++|employee_id|position_id|
+|id PRIMARY KEY++|employee_id INT|position_id INT|
 |-------|-------|------|
 
 -----
 
 **positions**
 
-|id PRIMARY KEY++|name|
+|id PRIMARY KEY++|name VARCHAR|
 |----|----|
 
 -----
