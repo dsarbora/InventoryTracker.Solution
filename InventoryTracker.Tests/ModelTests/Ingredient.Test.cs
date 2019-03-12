@@ -17,7 +17,7 @@ namespace InventoryTracker.Tests
             Ingredient.ClearAll();
             Dish.ClearAll();
            // Shipment.ClearAll();
-            Order.ClearAll();
+            TableOrder.ClearAll();
         }
 
         [TestMethod]
