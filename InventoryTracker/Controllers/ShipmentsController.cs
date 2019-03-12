@@ -26,5 +26,10 @@ namespace InventoryTracker.Controllers
             return View();
         }
 
+        [HttpGet("shipments/edit")]
+        public ActionResult Edit()
+        {
+            return View();
+        }
   }
 }

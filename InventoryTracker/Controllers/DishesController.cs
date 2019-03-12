@@ -26,18 +26,11 @@ namespace InventoryTracker.Controllers
     }
 
     [HttpGet("/dishes/edit")]
-    {
+  
       public ActionResult Edit()
       {
         return View();
       }
-    }
-
-
-
-
-
-
 
     }
 }

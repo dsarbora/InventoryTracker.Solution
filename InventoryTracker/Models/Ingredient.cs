@@ -159,7 +159,7 @@ namespace InventoryTracker.Models
             {
                 Ingredient newIngredient = (Ingredient)otherIngredient;
                 bool idEquality = this.GetId().Equals(newIngredient.GetId());
-                bool nameEquality = this.GetId().Equals(newIngredient.GetName());
+                bool nameEquality = this.GetName().Equals(newIngredient.GetName());
                 bool quantityEquality = this.GetQuantity().Equals(newIngredient.GetQuantity());
                 return (idEquality && nameEquality && quantityEquality);
             }
