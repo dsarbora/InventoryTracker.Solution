@@ -26,7 +26,7 @@ namespace InventoryTracker.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("INSERT INTO shipments (date) VALUES (@date)", conn);
+      MySqlCommand cmd = new MySqlCommand("INSERT INTO shipments (shipment_date) VALUES (@date)", conn);
       MySqlParameter prmDate = new MySqlParameter();
       prmDate.ParameterName = "@date";
       prmDate.Value = Date;
@@ -97,6 +97,60 @@ namespace InventoryTracker.Models
       {
         conn.Dispose();
       }
+    }
+
+    public void AddIngredient(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_shipments (ingredient_id, shipment_id) VALUES (@ingredient_id, @shipment_id);", conn);
+      cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
+      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", id));
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+    }
+
+    public void DeleteIngredient(int id)
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = new MySqlCommand("DELETE FROM ingredients_shipments WHERE shipment_id = @shipment_id AND ingredient_id=@ingredient_id;", conn);
+      cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
+      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", id));
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+    }
+
+    public List<Ingredient> GetAllIngredients()
+    {
+      List<Ingredient> allIngredients = new List<Ingredient>{};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = new MySqlCommand("SELECT ingredients.* FROM shipments JOIN ingredients_shipments i_s ON (shipments.id = i_s.shipment_id) JOIN ingredients ON (ingredients.id = i_s.ingredient_id) WHERE shipments.id=@shipment_id", conn);
+      cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
+      MySqlDataReader rdr = cmd.ExecuteReader();
+      while(rdr.Read())
+      {
+        int id = rdr.GetInt32(0);
+        string name=rdr.GetString(1);
+        int quantity = rdr.GetInt32(2);
+        Ingredient newIngredient = new Ingredient(name, quantity, id);
+        allIngredients.Add(newIngredient);
+      }
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+      return allIngredients;
     }
 
     public override bool Equals(System.Object otherShipment)
