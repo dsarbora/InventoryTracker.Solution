@@ -157,7 +157,6 @@ namespace InventoryTracker.Models
             }
             else
             {
-                return true;
                 Ingredient newIngredient = (Ingredient)otherIngredient;
                 bool idEquality = this.GetId().Equals(newIngredient.GetId());
                 bool nameEquality = this.GetId().Equals(newIngredient.GetName());
