@@ -69,6 +69,18 @@ namespace InventoryTracker.Tests
         }
         
         [TestMethod]
+        public void Equals_ChecksIfTwoOrdersAreTheSame_True()
+        {
+            int id = 0;
+            int dishId = 0;
+            int quantity = 0;
+            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            Order firstOrder = new Order(orderDate, dishId, quantity, id);
+            Order secondOrder = new Order(orderDate, dishId, quantity, id);
+            Assert.AreEqual(firstOrder, secondOrder);
+        }
+
+        [TestMethod]
         public void Save_SavesOrderToDatabase_Order()
         {
             int dishId = 0;
