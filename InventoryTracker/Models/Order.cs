@@ -102,7 +102,7 @@ namespace InventoryTracker.Models
         public override bool Equals(System.Object otherOrder)
         {
             if(!(otherOrder is Order))
-            { return false(); }
+            { return false; }
             
             else
             {
