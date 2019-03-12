@@ -23,7 +23,7 @@ namespace InventoryTracker.Models
         public int GetQuantity()
         { return Quantity; }
 
-        public DateTime GetDate()
+        public DateTime GetOrderDate()
         { return Date; }
 
         public int GetDishId()
@@ -101,16 +101,16 @@ namespace InventoryTracker.Models
             return foundOrder;
         }
 
-        public void Edit(int dishId, int quantity, DateTime orderDate)
+        public void Edit(DateTime orderDate, int dishId, int quantity)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("UPDATE orders SET dish_id=@dish_id, quantity=@quantity, date=@date WHERE id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("UPDATE orders SET dish_id=@dish_id, quantity=@quantity, order_date=@date WHERE id=@id", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
             MySqlParameter prmQuantity = new MySqlParameter("@quantity", quantity);
             cmd.Parameters.Add(prmQuantity);
-            MySqlParameter prmDate = new MySqlParameter("@order_date", orderDate);
+            MySqlParameter prmDate = new MySqlParameter("@date", orderDate);
             cmd.Parameters.Add(prmDate);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
             cmd.Parameters.Add(prmId);
@@ -161,7 +161,7 @@ namespace InventoryTracker.Models
             {
                 Order newOrder = (Order)otherOrder;
                 bool idEquality = this.GetId().Equals(newOrder.GetId());
-                bool dateEquality = this.GetDate().Equals(newOrder.GetDate());
+                bool dateEquality = this.GetOrderDate().Equals(newOrder.GetOrderDate());
                 bool dishEquality = this.GetDishId().Equals(newOrder.GetDishId());
                 bool quantityEquality = this.GetQuantity().Equals(newOrder.GetQuantity());
                 return (idEquality && dateEquality && quantityEquality && dishEquality);

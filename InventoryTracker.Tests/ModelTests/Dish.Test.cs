@@ -17,7 +17,7 @@ namespace InventoryTracker.Tests
             Ingredient.ClearAll();
             Dish.ClearAll();
             //Shipment.ClearAll();
-            //Order.ClearAll();
+            Order.ClearAll();
         }
         [TestMethod]
         public void GetName_ReturnsName_String()
@@ -40,7 +40,7 @@ namespace InventoryTracker.Tests
         }
 
         [TestMethod]
-        public void Equals_ReturnsTrueIfDishesAreTheSame_Ture()
+        public void Equals_ChecksIfDishesAreTheSame_Ture()
         {
             string name = "Eggs and bacon";
             int id = 1;
