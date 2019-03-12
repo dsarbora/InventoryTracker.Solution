@@ -37,7 +37,7 @@ namespace InventoryTracker.Models
                 conn.Dispose();
             }
         }
-        public List<Order> GetAll()
+        public static List<Order> GetAll()
         {
             List<Order> allOrders = new List<Order>{};
             MySqlConnection conn = DB.Connection();
@@ -50,7 +50,7 @@ namespace InventoryTracker.Models
             }
             return allOrders;
         }
-        public Order Find()
+        public static Order Find(int id)
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
