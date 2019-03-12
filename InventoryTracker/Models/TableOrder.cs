@@ -212,10 +212,33 @@ namespace InventoryTracker.Models
             return count;
         }
 
-        public List<Dish> GetAllDishes()
+        public List<DishQuantity> GetAllDishes()
         {
-            // -------------- ???  what structure to return??? -------------
-            return null;
+            List<DishQuantity> order = new List<DishQuantity>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT dishes.*, COUNT(orders.id) FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id GROUP BY table_order_id, dish_id", conn);
+            cmd.Parameters.Add(new MySqlParameter("@id", Id));
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            string name = "";
+            int dish_id = 0;
+            int count = 0;
+            while(rdr.Read())
+            {
+                dish_id = rdr.GetInt32(0);
+                name = rdr.GetString(1);
+                count = rdr.GetInt32(2);
+                Dish newDish = new Dish(name);
+                DishQuantity newDishQuantity = new DishQuantity(newDish, count);
+                order.Add(newDishQuantity);
+            }
+            conn.Close();
+            if(conn != null)
+            {
+                conn.Dispose();
+            }
+
+            return order;
         }
     }
 }
