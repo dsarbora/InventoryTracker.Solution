@@ -53,7 +53,7 @@ namespace InventoryTracker.Models
       DateTime date = DateTime.Now;
       while(rdr.Read())
       {
-        //date = rdr.GetDate(1);
+        date = rdr.GetDateTime(1);
       }
       Shipment newShipment = new Shipment(date, id);
       conn.Close();
@@ -74,8 +74,7 @@ namespace InventoryTracker.Models
       while(rdr.Read())
       {
         int id = rdr.GetInt32(0);
-        //DateTime date = rdr.GetDate(1);
-        DateTime date = DateTime.Now;
+        DateTime date = rdr.GetDateTime(1);
         Shipment newShipment = new Shipment(date, id);
         allShipments.Add(newShipment);
       }

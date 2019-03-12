@@ -16,8 +16,21 @@ namespace InventoryTracker.Tests
         {
             Ingredient.ClearAll();
             Dish.ClearAll();
-           // Shipment.ClearAll();
-           // Order.ClearAll();
+            Shipment.ClearAll();
+            Order.ClearAll();
+        }
+
+        [TestMethod]
+        public void Find()
+        {
+            DateTime orderDate = Convert.ToDateTime("3/12/2019");
+            Shipment shipment = new Shipment(orderDate);
+            shipment.Save();
+            Shipment newShipment = Shipment.Find(shipment.GetId());
+            Assert.AreEqual(shipment, newShipment);
+
+
+            
         }
     }
 }
