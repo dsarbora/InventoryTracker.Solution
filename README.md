@@ -14,9 +14,11 @@ _Each route has the following structure, and the following will be written using
 **New**
 
 A page designed to recieve an order. Here a user can input the ingredients they recieved along with a quantity, and the program will output a corresponding change in the database.
+
 **Show**
 
 Shows the details of a specific order. It will show the order ID, the date recieved, which ingredients were in the order, and how many of each ingredient were recieved.
+
 **Edit**
 
 This is where a user can edit the various data that show up on the "show" page. This page is a form containing the same input fields as the "new" page, but it will modify an existing order.
@@ -54,20 +56,6 @@ _For storing the number of dishes ordered by a group of people sitting at the sa
 
 _For storing the amount of each ingredient in a shipment._
 
-#### METHODS
-
-Each class distributes to its members at minimum the following methods:
-* Save()
-* (Static) Find(int id)
-* (Static) GetAll()
-* Edit()
-* Delete()
-* ClearAll()
-* Override Equals()
-
-* There are also several other methods linking these classes together so that, for example, an Ingredient can be associated with a Shipment or a Dish.
-
-
 #### DATABASES
 
 * restaurant
@@ -97,77 +85,6 @@ restaurant and restaurant_test are identical in structure.
 |dish_id|dish_id          |shipment_id          |
 |      |ingredient_quantity|quantity
 
-<!-- **ingredients:**
-
-|id PRIMARY KEY++|name VARCHAR|expiration DATE|
-|------:|----------|--------------------------|
-
-
------
-
-**recipe_ingredient:**
-
-|id PRIMARY KEY++|recipe_id INT|ingredient_id INT|
-|------:|:-------------:|-----------------|
-
-------
-
-**ingredient_shipment**
-
-|id PRIMARY KEY++|ingredient_id INT|shipment_id INT|
-|-----------------|------|----|
-
-
------
-
-**recipes**
-
-|id PRIMARY KEY++|name VARCHAR|
-|-----|------|
-
-------
-
-**shipments**
-
-|id PRIMARY KEY++|date DATE|
-|--------------------|-----|
-
-
------
-
-**maint_items**
-
-|id PRIMARY KEY++|name VARCHAR|last_date DATE|
-|------------|---------|----|
-
------
-
-**employee_maintenance**
-
-|id PRIMARY KEY++|employee_id INT|maintenance_id INT|
-|-----|-----|------|
-
------
-
-**employees**
-
-|id PRIMARY KEY++|name VARCHAR|hired_date DATE|
-|--------------|----|-----|
-
-
------
-
-**employee_position**
-
-|id PRIMARY KEY++|employee_id INT|position_id INT|
-|-------|-------|------|
-
------
-
-**positions**
-
-|id PRIMARY KEY++|name VARCHAR|
-|----|----| -->
 
 -----
 
