@@ -166,10 +166,10 @@ namespace InventoryTracker.Tests
 
             List<DishQuantity> testList = new List<DishQuantity>{ new DishQuantity(newDish, 2) };
             List<DishQuantity> result = newTableOrder.GetAllDishes();
-
-           // CollectionAssert.AreEqual(testList, result);
+            Console.WriteLine("{0} {1}", testList[0].GetQuantity(), result[0].GetQuantity());
+            CollectionAssert.AreEqual(testList, result);
             //Assert.AreEqual(testList.Count, result.Count);
-            Assert.AreEqual(2, result[0].GetQuantity());
+            //Assert.AreEqual(2, result[0].GetQuantity());
         }
     }
 }

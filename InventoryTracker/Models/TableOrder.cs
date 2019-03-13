@@ -228,7 +228,7 @@ namespace InventoryTracker.Models
                 dish_id = rdr.GetInt32(0);
                 name = rdr.GetString(1);
                 count = rdr.GetInt32(2);
-                Dish newDish = new Dish(name);
+                Dish newDish = new Dish(name, dish_id);
                 DishQuantity newDishQuantity = new DishQuantity(newDish, count);
                 order.Add(newDishQuantity);
             }
