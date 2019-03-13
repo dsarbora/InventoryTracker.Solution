@@ -135,7 +135,7 @@ namespace InventoryTracker.Tests
         }
 
         [TestMethod]
-        public void AddDish_AddDishTableOrderToJointTable_Dish()
+        public void GetNumberOfDishEntries_ReturnsDishQuantityfromToJointTable_Dish()
         {
             string name = "Eggs and Bacon";
             string tableNumber = "4";
@@ -145,12 +145,32 @@ namespace InventoryTracker.Tests
             int dishId = newDish.GetId();
             TableOrder newTableOrder = new TableOrder(tableNumber, orderDate);
             newTableOrder.Save();
-            newTableOrder.AddDish(dishId);
+            newTableOrder.AddDish(dishId, 2);
 
-            int countDishEntries = 1;
-            int result = newTableOrder.GetNumberOfDishEntries(dishId);
+            int countDishEntries = 2;
+            int result = newTableOrder.GetDishQuantity(dishId);
 
             Assert.AreEqual(countDishEntries, result);
+        }
+
+        [TestMethod]
+        public void UpdateDish_UpdatesDishQuantityInJointTable_Dish()
+        {
+            string name = "Eggs and Bacon";
+            string tableNumber = "4";
+            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            Dish newDish = new Dish(name);
+            newDish.Save();
+            int dishId = newDish.GetId();
+            TableOrder newTableOrder = new TableOrder(tableNumber, orderDate);
+            newTableOrder.Save();
+            newTableOrder.AddDish(dishId, 2);
+            newTableOrder.UpdateDish(dishId, 3);
+
+            List<DishQuantity> testList = new List<DishQuantity>{ new DishQuantity(newDish, 3) };
+            List<DishQuantity> result = newTableOrder.GetAllDishes();
+
+            CollectionAssert.AreEqual(testList, result);
         }
         
         [TestMethod]
@@ -158,15 +178,19 @@ namespace InventoryTracker.Tests
         {
             Dish newDish = new Dish("Eggs and bacon");
             newDish.Save();
-            int dish_id = newDish.GetId();
+            int dishId = newDish.GetId();
+            Dish newDish2 = new Dish("Cesar Salad");
+            newDish2.Save();
+            int dishId2 = newDish2.GetId();
             TableOrder newTableOrder = new TableOrder("4", Convert.ToDateTime("01/01/2019"));
             newTableOrder.Save();
-            newTableOrder.AddDish(dish_id);
-            newTableOrder.AddDish(dish_id);
+            newTableOrder.AddDish(dishId, 2);
+            newTableOrder.AddDish(dishId2, 1);
 
-            List<DishQuantity> testList = new List<DishQuantity>{ new DishQuantity(newDish, 2) };
+            List<DishQuantity> testList = new List<DishQuantity>{ new DishQuantity(newDish, 2), new DishQuantity(newDish2, 1) };
             List<DishQuantity> result = newTableOrder.GetAllDishes();
             Console.WriteLine("{0} {1}", testList[0].GetQuantity(), result[0].GetQuantity());
+            Console.WriteLine("{0} {1}", testList[1].GetQuantity(), result[1].GetQuantity());
             CollectionAssert.AreEqual(testList, result);
             //Assert.AreEqual(testList.Count, result.Count);
             //Assert.AreEqual(2, result[0].GetQuantity());

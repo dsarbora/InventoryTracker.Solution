@@ -130,7 +130,7 @@ namespace InventoryTracker.Models
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("DELETE FROM table_orders; DELETE FROM orders", conn);
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM table_orders; DELETE FROM orders; DELETE FROM dishes", conn);
             cmd.ExecuteNonQuery();
             conn.Close();
             if(conn!=null)
@@ -154,11 +154,30 @@ namespace InventoryTracker.Models
             }
         }
 
-        public void AddDish(int dishId)
+        public void AddDish(int dishId, int quantity)
         {   
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO orders (dish_id, table_order_id) VALUES (@dish_id, @id)", conn);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO orders (dish_id, table_order_id, dish_quantity) VALUES (@dish_id, @id, @quantity)", conn);
+            MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
+            cmd.Parameters.Add(prmDishId);
+            MySqlParameter prmId = new MySqlParameter("@id", Id);
+            cmd.Parameters.Add(prmId);
+            MySqlParameter prmQuantity = new MySqlParameter("@quantity", quantity);
+            cmd.Parameters.Add(prmQuantity);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if(conn != null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public void DeleteDish(int dishId)
+        {   
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM orders WHERE dish_id=@dish_id and table_order_id=@id", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
@@ -171,15 +190,17 @@ namespace InventoryTracker.Models
             }
         }
 
-        public void DeleteDishEntry(int dishId)
+        public void UpdateDish(int dishId, int quantity)
         {   
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("DELETE TOP(1) FROM orders WHERE dish_id=@dish_id and id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("UPDATE orders SET dish_quantity=@quantity WHERE dish_id=@dish_id and table_order_id=@id", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
             cmd.Parameters.Add(prmId);
+            MySqlParameter prmQuantity = new MySqlParameter("@quantity", quantity);
+            cmd.Parameters.Add(prmQuantity);
             cmd.ExecuteNonQuery();
             conn.Close();
             if(conn != null)
@@ -188,12 +209,12 @@ namespace InventoryTracker.Models
             }
         }
 
-        public int GetNumberOfDishEntries(int dishId)
+        public int GetDishQuantity(int dishId)
         {
             int count = 0;
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT COUNT(id) FROM orders WHERE dish_id=@dish_id and table_order_id=@id GROUP BY dish_id, table_order_id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT dish_quantity FROM orders WHERE dish_id=@dish_id and table_order_id=@id", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
@@ -217,19 +238,20 @@ namespace InventoryTracker.Models
             List<DishQuantity> order = new List<DishQuantity>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT dishes.*, COUNT(orders.id) FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id GROUP BY table_order_id, dish_id", conn);
+            //MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT dishes.*, orders.dish_quantity FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             string name = "";
-            int dish_id = 0;
-            int count = 0;
+            int dishId = 0;
+            int quantity = 0;
             while(rdr.Read())
             {
-                dish_id = rdr.GetInt32(0);
+                dishId = rdr.GetInt32(0);
                 name = rdr.GetString(1);
-                count = rdr.GetInt32(2);
-                Dish newDish = new Dish(name, dish_id);
-                DishQuantity newDishQuantity = new DishQuantity(newDish, count);
+                quantity = rdr.GetInt32(2);
+                Dish newDish = new Dish(name, dishId);
+                DishQuantity newDishQuantity = new DishQuantity(newDish, quantity);
                 order.Add(newDishQuantity);
             }
             conn.Close();

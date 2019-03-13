@@ -35,8 +35,34 @@ namespace InventoryTracker.Controllers
         TableOrder foundOrder = TableOrder.Find(tableOrderId);
         Dictionary<string, object> model = new Dictionary<string, object>();
         model["order"] = foundOrder;
-        model["dishes"] = foundOrder.GetAllDishes();
+        model["order_dishes"] = foundOrder.GetAllDishes();
+        model["all_dishes"] = Dish.GetAll();
         return View(model);
     }
+
+    [HttpPost("/orders/{tableOrderid}/add_dish")]
+    public ActionResult Create(int tableOrderId, int dishId, int quantity)
+    {
+      TableOrder foundOrder = TableOrder.Find(tableOrderId);
+      foundOrder.AddDish(dishId, quantity);
+      return RedirectToAction("Show");
+    }
+
+    [HttpPost("/orders/{tableOrderid}/dishes/{dishId}/update")]
+    public ActionResult Update(int tableOrderId, int dishId, int quantity)
+    {
+      TableOrder foundOrder = TableOrder.Find(tableOrderId);
+      foundOrder.UpdateDish(dishId, quantity);
+      return RedirectToAction("Show");
+    }    
+      
+    [HttpPost("/orders/{tableOrderid}/dishes/{dishId}/delete")]
+    public ActionResult Delete(int tableOrderId, int dishId)
+    {
+      Console.WriteLine(" Delete: {0} {1}", tableOrderId, dishId);
+      TableOrder foundOrder = TableOrder.Find(tableOrderId);
+      foundOrder.DeleteDish(dishId);
+      return RedirectToAction("Show");
+    }     
   }
 }
