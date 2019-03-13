@@ -148,6 +148,47 @@ namespace InventoryTracker.Models
                 conn.Dispose();
             }            
         }
+
+        public List<Shipment> GetShipments()
+        {
+            List<Shipment> allIngredientShipments = new List<Shipment>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT shipments.* FROM ingredients JOIN ingredients_shipments i_s ON (i_s.ingredient_id=ingredients.id) JOIN shipments ON (shipments.id=i_s.shipment_id) WHERE ingredients.id = @id ORDER BY shipment_date;", conn);
+            cmd.Parameters.Add(new MySqlParameter("@id", Id));
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while(rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                DateTime date = rdr.GetDateTime(1);
+                Shipment newShipment = new Shipment(date, id);
+                allIngredientShipments.Add(newShipment);
+            }
+            return allIngredientShipments;
+        }
+
+        public List<Dish> GetDishes()
+        {
+            List<Dish> allIngredientDishes = new List<Dish>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM ingredients JOIN ingredients_dishes id ON( id.ingredient_id = ingredients.id) JOIN dishes ON(dishes.id=id.dish_id) WHERE id=@id", conn);
+            cmd.Parameters.Add(new MySqlParameter("@id", Id));
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while(rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name= rdr.GetString(1);
+                Dish newDish = new Dish(name, id);
+                allIngredientDishes.Add(newDish);
+            }
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+            return allIngredientDishes;
+        }
         
         public override bool Equals(System.Object otherIngredient)
         {

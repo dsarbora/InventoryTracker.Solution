@@ -133,6 +133,37 @@ namespace InventoryTracker.Models
             }
         }
 
+        public void AddIngredient(int ingredientId, int quantity)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_dishes (ingredient_id, dish_id, ingredient_quantity) VALUES (@ingredientId, @dishId, @quantity);",conn);
+            cmd.Parameters.Add(new MySqlParameter("@ingredientId", ingredientId));
+            cmd.Parameters.Add(new MySqlParameter("@dishId", Id));
+            cmd.Parameters.Add(new MySqlParameter("@quantity", quantity));
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+        }
+
+        public void DeleteIngredient(int ingredientId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM ingredients_dishes WHERE ingredient_id = @ingredient_id AND dish_id = @dish_id", conn);
+            cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
+            cmd.Parameters.Add(new MySqlParameter("@dish_id", Id));
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+        }
+
         public override bool Equals(System.Object otherDish)
         {
             if(!(otherDish is Dish))

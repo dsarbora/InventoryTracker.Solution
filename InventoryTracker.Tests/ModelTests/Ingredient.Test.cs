@@ -16,7 +16,7 @@ namespace InventoryTracker.Tests
         {
             Ingredient.ClearAll();
             Dish.ClearAll();
-           // Shipment.ClearAll();
+            Shipment.ClearAll();
             Order.ClearAll();
         }
 
@@ -62,6 +62,61 @@ namespace InventoryTracker.Tests
             List<Ingredient> allIngredients = new List<Ingredient>{};
             List<Ingredient> testList = Ingredient.GetAll();
             CollectionAssert.AreEqual(allIngredients, testList);
+        }
+        [TestMethod]
+        public void GetShipments_GetsAllIngredientShipments_ShipmentList()
+        {
+            DateTime orderDate = Convert.ToDateTime("2/26/2019");
+            DateTime orderDate2 = Convert.ToDateTime("3/5/2019");
+            DateTime orderDate3 = Convert.ToDateTime("3/12/2019");
+            Shipment shipment = new Shipment(orderDate);
+            Shipment shipment2 = new Shipment(orderDate2);
+            Shipment shipment3 = new Shipment(orderDate3);
+            shipment.Save();
+            shipment2.Save();
+            shipment3.Save();
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            shipment.AddIngredient(newIngredient.GetId());
+            shipment2.AddIngredient(newIngredient.GetId());
+            List<Shipment> shipmentsWithIngredient = new List<Shipment>{shipment, shipment2};
+            List<Shipment> testList = newIngredient.GetShipments();
+            CollectionAssert.AreEqual(shipmentsWithIngredient, testList);
+        }
+
+        [TestMethod]
+        public void GetShipments_OrdersByDate_ShipmentList()
+        {
+            DateTime orderDate = Convert.ToDateTime("2/26/2019");
+            DateTime orderDate2 = Convert.ToDateTime("3/5/2019");
+            DateTime orderDate3 = Convert.ToDateTime("3/12/2019");
+            Shipment shipment = new Shipment(orderDate);
+            Shipment shipment2 = new Shipment(orderDate2);
+            Shipment shipment3 = new Shipment(orderDate3);
+            shipment.Save();
+            shipment2.Save();
+            shipment3.Save();
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            shipment.AddIngredient(newIngredient.GetId());
+            shipment2.AddIngredient(newIngredient.GetId());
+            List<Shipment> shipmentsWithIngredient = new List<Shipment>{shipment2, shipment};
+            List<Shipment> testList = newIngredient.GetShipments();
+            CollectionAssert.AreNotEqual(shipmentsWithIngredient, testList);
+        }
+
+        public void GetDishes_ReturnsIngredientDishes_DishList()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            Dish newDish = new Dish("stew");
+            newIngredient.Save();
+            newDish.Save();
+            newDish.AddIngredient(newIngredient.GetId(), 5);
+            Dish otherDish = new Dish("beans and rice");
+            otherDish.Save();
+            List<Dish> allCeleryDish = new List<Dish>{newDish};
+            List<Dish> testList = newIngredient.GetDishes();
+            CollectionAssert.AreEqual(allCeleryDish, testList);
         }
     }
 }
