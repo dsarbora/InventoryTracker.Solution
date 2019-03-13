@@ -147,5 +147,35 @@ namespace InventoryTracker.Models
                 return (nameEquality && idEquality);
             }
         }
+
+        public List<IngredientQuantity> AllIngredients()
+        {
+            List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT ingredients.*, in_d.ingredient_quantity FROM ingredients JOIN ingredients_dishes in_d ON (ingredients.id = in_d.ingredient_id) WHERE in_d.dish_id=@id", conn);
+            cmd.Parameters.Add(new MySqlParameter("@id", Id));
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            string name = "";
+            int ingredientId = 0;
+            int inventoryQuantity = 0;
+            int dishQuantity = 0;
+            while(rdr.Read())
+            {
+                ingredientId = rdr.GetInt32(0);
+                name = rdr.GetString(1);
+                inventoryQuantity = rdr.GetInt32(2);
+                dishQuantity = rdr.GetInt32(3);
+                Ingredient ingredient = new Ingredient(name, inventoryQuantity, ingredientId);
+                IngredientQuantity ingredientQuantity = new IngredientQuantity(ingredient, dishQuantity);
+                allIngredients.Add(ingredientQuantity);
+            }
+            conn.Close();
+            if(conn != null)
+            {
+                conn.Dispose();
+            }
+            return allIngredients;
+        }
     }
 }
