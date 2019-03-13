@@ -6,7 +6,7 @@
   <div class="row">
       <div class="col-md-12">
         <a href="#"><div class="well long">
-            <h1>Lorem ipsum sit dolor</h1>
+            <h1>@Model["dish"].GetName()</h1>
         </div></a>
       </div>
   </div>
@@ -14,6 +14,20 @@
       <div class="col-md-4">
           <div class="well stacked">
               <h1>Lorem</h1>
+              <form action="/dishes/@Model["dish"].GetId()/add_ingredient" method="post">
+                    
+                    <label for="ingredientId">Add ingredient</label>
+                    <select id="ingredientId" name="ingredientId">
+                        @foreach(Ingredient ingredient in Model["all_ingredients"])
+                        {
+                            <option value="@ingredient.GetId()">@ingredient.GetName()</option>
+                        }
+                    </select>
+                    <label for="quantity">Quantity</label>
+                    <input id="quantity" name="quantity" type="number" value="1" required>
+                    
+                    <button type="submit">Add</button>
+                </form>
           </div>
           <div class="well stacked">
               <h1>ipsum</h1>
@@ -25,6 +39,30 @@
       <div class="col-md-8">
           <div class="well big">
               <h1>Lorem ipsum sit dolor</h1>
+              
+
+                @if(Model["dish_ingredients"].Count == 0)
+                {
+                    <p>No ingredients</p>
+                }
+                @if(Model["dish_ingredients"].Count != 0)
+                {
+                    @foreach(IngredientQuantity ingredient in Model["dish_ingredients"])
+                    {
+                        <br>
+                        <form action="/dishes/@Model["dish"].GetId()/ingredients/@ingredient.GetIngredient().GetId()/update" method="post">
+                            <p>Ingredient: @ingredient.GetIngredient().GetName()</p>
+                            <label for="quantity">Quantity</label>
+                            <input id="quantity" name="quantity" type="number" value="@ingredient.GetQuantity()"required>
+                            <br>
+                            <button type="submit">Edit quantity</button>
+                        </form>
+                        <form action="/dishes/@Model["dish"].GetId()/ingredients/@ingredient.GetIngredient().GetId()/delete" method="post">
+                            
+                            <button type="submit">Delete</button>
+                        </form>
+                    }
+                }          
           </div>
       </div>
   </div>

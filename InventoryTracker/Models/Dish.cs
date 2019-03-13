@@ -149,6 +149,22 @@ namespace InventoryTracker.Models
             }
         }
 
+        public void UpdateIngredient(int ingredientId, int quantity)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("UPDATE ingredients_dishes SET ingredient_quantity=@quantity WHERE ingredient_id=@ingredientId and dish_id=@dishId;",conn);
+            cmd.Parameters.Add(new MySqlParameter("@ingredientId", ingredientId));
+            cmd.Parameters.Add(new MySqlParameter("@dishId", Id));
+            cmd.Parameters.Add(new MySqlParameter("@quantity", quantity));
+            cmd.ExecuteNonQuery();
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+        }
+
         public void DeleteIngredient(int ingredientId)
         {
             MySqlConnection conn = DB.Connection();
@@ -179,7 +195,7 @@ namespace InventoryTracker.Models
             }
         }
 
-        public List<IngredientQuantity> AllIngredients()
+        public List<IngredientQuantity> GetAllIngredients()
         {
             List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
             MySqlConnection conn = DB.Connection();
