@@ -40,14 +40,14 @@ namespace InventoryTracker.Models
       }
     }
 
-    public static Shipment Find(int id)
+    public static Shipment Find(int ingredientId)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = new MySqlCommand("SELECT * FROM shipments WHERE id = @id;", conn);
       MySqlParameter prmId = new MySqlParameter();
       prmId.ParameterName = "@id";
-      prmId.Value = id;
+      prmId.Value = ingredientId;
       cmd.Parameters.Add(prmId);
       MySqlDataReader rdr = cmd.ExecuteReader();
       DateTime date = DateTime.Now;
@@ -55,7 +55,7 @@ namespace InventoryTracker.Models
       {
         date = rdr.GetDateTime(1);
       }
-      Shipment newShipment = new Shipment(date, id);
+      Shipment newShipment = new Shipment(date, ingredientId);
       conn.Close();
       if(conn!=null)
       {
@@ -99,13 +99,13 @@ namespace InventoryTracker.Models
       }
     }
 
-    public void AddIngredient(int id)
+    public void AddIngredient(int ingredientId)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_shipments (ingredient_id, shipment_id) VALUES (@ingredient_id, @shipment_id);", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
-      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", id));
+      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
       cmd.ExecuteNonQuery();
       conn.Close();
       if(conn!=null)
@@ -114,13 +114,13 @@ namespace InventoryTracker.Models
       }
     }
 
-    public void DeleteIngredient(int id)
+    public void DeleteIngredient(int ingredientId)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
       MySqlCommand cmd = new MySqlCommand("DELETE FROM ingredients_shipments WHERE shipment_id = @shipment_id AND ingredient_id=@ingredient_id;", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
-      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", id));
+      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
       cmd.ExecuteNonQuery();
       conn.Close();
       if(conn!=null)

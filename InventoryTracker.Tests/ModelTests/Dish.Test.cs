@@ -99,5 +99,33 @@ namespace InventoryTracker.Tests
             List<Dish> result = Dish.GetAll();
             CollectionAssert.AreEqual(testList, result);
         }
+
+        [TestMethod]
+        public void AddIngredient_AddsIngredientToDish_IngredientList()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            Dish newDish = new Dish("stew");
+            newDish.Save();
+            newDish.AddIngredient(newIngredient.GetId(), 5);
+            List<Ingredient> allIngredients = new List<Ingredient>{newIngredient};
+            List<Ingredient> testList = newDish.AllIngredients();
+            CollectionAssert.AreEqual(allIngredients, testList);
+        }
+
+        [TestMethod]
+        public void DeleteIngredient_DeletesIngredientFromDish_EmptyList()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            Dish newDish = new Dish("stew");
+            newDish.Save();
+            newDish.AddIngredient(newIngredient.GetId(), 5);
+            newDish.DeleteIngredient(newIngredient.GetId());
+            List<Ingredient> allIngredients = new List<Ingredient>{newIngredient};
+            List<Ingredient> testList = newDish.AllIngredients();
+            CollectionAssert.AreEqual(allIngredients, testList);
+        }
+
     }
 }
