@@ -99,13 +99,14 @@ namespace InventoryTracker.Models
       }
     }
 
-    public void AddIngredient(int ingredientId)
+    public void AddIngredient(int ingredientId, int quantity)
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_shipments (ingredient_id, shipment_id) VALUES (@ingredient_id, @shipment_id);", conn);
+      MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_shipments (ingredient_id, shipment_id, quantity) VALUES (@ingredient_id, @shipment_id, @quantity);", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
+      cmd.Parameters.Add(new MySqlParameter("@quantity", quantity));
       cmd.ExecuteNonQuery();
       conn.Close();
       if(conn!=null)
@@ -129,12 +130,28 @@ namespace InventoryTracker.Models
       }
     }
 
-    public List<Ingredient> GetAllIngredients()
+    public void EditIngredientQuantity(int ingredientId, int quantity)
     {
-      List<Ingredient> allIngredients = new List<Ingredient>{};
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("SELECT ingredients.* FROM shipments JOIN ingredients_shipments i_s ON (shipments.id = i_s.shipment_id) JOIN ingredients ON (ingredients.id = i_s.ingredient_id) WHERE shipments.id=@shipment_id", conn);
+      MySqlCommand cmd = new MySqlCommand("UPDATE ingredients_shipments SET quantity=@quantity WHERE shipment_id=@shipment_id AND ingredient_id=@ingredient_id;", conn);
+      cmd.Parameters.Add(new MySqlParameter("@quantity", quantity));
+      cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
+      cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+    }
+
+    public List<IngredientQuantity> GetAllIngredients()
+    {
+      List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = new MySqlCommand("SELECT ingredients.*, i_s.quantity FROM ingredients_shipments i_s JOIN ingredients ON (ingredients.id = i_s.ingredient_id) WHERE i_s.shipment_id=@shipment_id", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       MySqlDataReader rdr = cmd.ExecuteReader();
       while(rdr.Read())
@@ -142,8 +159,9 @@ namespace InventoryTracker.Models
         int id = rdr.GetInt32(0);
         string name=rdr.GetString(1);
         int quantity = rdr.GetInt32(2);
+        int shipmentQuantity = rdr.GetInt32(3);
         Ingredient newIngredient = new Ingredient(name, quantity, id);
-        allIngredients.Add(newIngredient);
+        allIngredients.Add(new IngredientQuantity(newIngredient, shipmentQuantity));
       }
       conn.Close();
       if(conn!=null)

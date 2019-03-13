@@ -20,16 +20,49 @@ namespace InventoryTracker.Controllers
           return View();
         }
 
-        [HttpGet("/shipments/show")]
-        public ActionResult Show()
+        [HttpGet("/shipments/{id}")]
+        public ActionResult Show(int id)
+        {
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            Shipment newShipment = Shipment.Find(id);
+            List<Ingredient> allIngredients = Ingredient.GetAll();
+            List<IngredientQuantity> shipmentIngredients = newShipment.GetAllIngredients();
+            model.Add("shipment", newShipment);
+            model.Add("allIngredients", allIngredients);
+            model.Add("shipmentIngredients", shipmentIngredients);
+            return View(model);
+
+            return View();
+        }
+
+        [HttpGet("shipments/{id}/edit")]
+        public ActionResult Edit()
         {
             return View();
         }
 
-        [HttpGet("shipments/edit")]
-        public ActionResult Edit()
+        [HttpPost("/shipments/create")]
+        public ActionResult Create(DateTime date)
         {
-            return View();
+            Shipment newShipment = new Shipment(date);
+            newShipment.Save();
+            return RedirectToAction("Show", new {id=newShipment.GetId()});
+        }
+        
+        [HttpPost("/shipments/{shipmentId}/add_ingredient")]
+        public ActionResult AddIngredient(int shipmentId, int ingredientId)
+        {
+          Shipment newShipment = Shipment.Find(shipmentId);
+          newShipment.AddIngredient(ingredientId, 0);
+          return RedirectToAction("Show", new {id=newShipment.GetId()});
+        }
+
+        [HttpPost("/shipments/{shipmentId}/ingredients/{ingredientId}/edit")]
+        public ActionResult UpdateIngredient(int shipmentId, int ingredientId, int quantity)
+        {
+          Shipment newShipment = Shipment.Find(shipmentId);
+          newShipment.EditIngredientQuantity(ingredientId, quantity);
+          return RedirectToAction("Show", new {id=newShipment.GetId()});
         }
   }
 }

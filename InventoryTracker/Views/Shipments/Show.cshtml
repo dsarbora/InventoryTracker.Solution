@@ -5,26 +5,40 @@
 <div id="seventeen" class="container">
   <div class="row">
       <div class="col-md-12">
-        <a href="#"><div class="well long">
-            <h1>Lorem ipsum sit dolor</h1>
-        </div></a>
+        <div class="well long">
+            <h1>Shipment @Model["shipment"].GetId() Recieved @Model["shipment"].GetDate()</h1>
+        </div>
       </div>
   </div>
   <div class="row">
       <div class="col-md-4">
           <div class="well stacked">
-              <h1>Lorem</h1>
+              <h2>Edit shipment</h2>
           </div>
           <div class="well stacked">
-              <h1>ipsum</h1>
-          </div>
-          <div class="well stacked">
-              <h1>sit</h1>
+              
+            <form action='/shipments/@Model["shipment"].GetId()/add_ingredient' method="post">
+                <label for="ingredientId">Add Ingredient</label>
+                <select id="ingredientId" name="ingredientId">
+                @foreach(Ingredient ingredient in Model["allIngredients"])
+                {        
+                    <option value="@ingredient.GetId()">@ingredient.GetName()</option>          
+                }        
+                </select>
+                <button type="submit">Add Ingredients</button>
+            </form>
           </div>
       </div>
       <div class="col-md-8">
           <div class="well big">
-              <h1>Lorem ipsum sit dolor</h1>
+              @foreach(IngredientQuantity ingredient in Model["shipmentIngredients"])
+              {
+                  <form action='/shipments/@Model["shipment"].GetId()/ingredients/@ingredient.GetIngredient().GetId()/edit' method="post">
+                    <label for="quantity">@ingredient.GetIngredient().GetName()</label>
+                    <input id="quantity" name="quantity" value="@ingredient.GetQuantity()">
+                    <button type="submit">Edit</button>
+                  </form>
+              }
           </div>
       </div>
   </div>
