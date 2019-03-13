@@ -11,4 +11,6 @@ CREATE TABLE ingredients_shipments (id serial PRIMARY KEY, ingredient_id INT, sh
 DROP TABLE orders;
 CREATE TABLE table_orders (id serial PRIMARY KEY, table_number VARCHAR(10), order_date DATE);
 -- new --
-CREATE TABLE orders (id serial PRIMARY KEY, table_order_id int, dish_id int);
+-- update : add dish_quantity INT --
+-- ALTER TABLE `orders` ADD `dish_quantity` INT NOT NULL AFTER `dish_id`;
+CREATE TABLE orders (id serial PRIMARY KEY, table_order_id int, dish_id int, dish_quantity INT);
