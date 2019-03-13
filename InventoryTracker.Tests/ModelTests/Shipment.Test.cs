@@ -62,10 +62,11 @@ namespace InventoryTracker.Tests
             newIngredient.Save();
             Ingredient newIngredient2 = new Ingredient("carrots");
             newIngredient2.Save();
-            shipment.AddIngredient(newIngredient.GetId());
-            shipment.AddIngredient(newIngredient2.GetId());
-            List<Ingredient> allIngredients = new List<Ingredient>{newIngredient, newIngredient2};
-            List<Ingredient> testList = shipment.GetAllIngredients();
+            shipment.AddIngredient(newIngredient.GetId(), 5);
+            shipment.AddIngredient(newIngredient2.GetId(), 5);
+            List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{new IngredientQuantity(newIngredient, 5), new IngredientQuantity(newIngredient2, 5)};
+            List<IngredientQuantity> testList = shipment.GetAllIngredients();
+            Console.WriteLine("{0} {1}", allIngredients[0].GetQuantity(), testList[0].GetQuantity());
             CollectionAssert.AreEqual (allIngredients, testList);
         }
 
@@ -79,10 +80,10 @@ namespace InventoryTracker.Tests
             newIngredient.Save();
             Ingredient newIngredient2 = new Ingredient("carrots");
             newIngredient2.Save();
-            shipment.AddIngredient(newIngredient.GetId());
-            shipment.AddIngredient(newIngredient2.GetId());
-            List<Ingredient> allIngredients = new List<Ingredient>{newIngredient, newIngredient2};
-            List<Ingredient> testList = shipment.GetAllIngredients();
+            shipment.AddIngredient(newIngredient.GetId(), 5);
+            shipment.AddIngredient(newIngredient2.GetId(), 5);
+            List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{new IngredientQuantity(newIngredient, 5), new IngredientQuantity(newIngredient2, 5)};
+            List<IngredientQuantity> testList = shipment.GetAllIngredients();
             CollectionAssert.AreEqual (allIngredients, testList);
         }
 
@@ -94,10 +95,10 @@ namespace InventoryTracker.Tests
             shipment.Save();
             Ingredient newIngredient = new Ingredient("celery");
             newIngredient.Save();
-            shipment.AddIngredient(newIngredient.GetId());
+            shipment.AddIngredient(newIngredient.GetId(), 5);
             shipment.DeleteIngredient(newIngredient.GetId());
-            List<Ingredient> allIngredients = new List<Ingredient>{};
-            List<Ingredient> testList = shipment.GetAllIngredients();
+            List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
+            List<IngredientQuantity> testList = shipment.GetAllIngredients();
             CollectionAssert.AreEqual(testList, allIngredients);
         }
 
