@@ -77,8 +77,8 @@ namespace InventoryTracker.Tests
             shipment3.Save();
             Ingredient newIngredient = new Ingredient("celery");
             newIngredient.Save();
-            shipment.AddIngredient(newIngredient.GetId());
-            shipment2.AddIngredient(newIngredient.GetId());
+            shipment.AddIngredient(newIngredient.GetId(), 5);
+            shipment2.AddIngredient(newIngredient.GetId(), 5);
             List<Shipment> shipmentsWithIngredient = new List<Shipment>{shipment, shipment2};
             List<Shipment> testList = newIngredient.GetShipments();
             CollectionAssert.AreEqual(shipmentsWithIngredient, testList);
@@ -98,8 +98,8 @@ namespace InventoryTracker.Tests
             shipment3.Save();
             Ingredient newIngredient = new Ingredient("celery");
             newIngredient.Save();
-            shipment.AddIngredient(newIngredient.GetId());
-            shipment2.AddIngredient(newIngredient.GetId());
+            shipment.AddIngredient(newIngredient.GetId(), 5);
+            shipment2.AddIngredient(newIngredient.GetId(), 5);
             List<Shipment> shipmentsWithIngredient = new List<Shipment>{shipment2, shipment};
             List<Shipment> testList = newIngredient.GetShipments();
             CollectionAssert.AreNotEqual(shipmentsWithIngredient, testList);
