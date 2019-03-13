@@ -109,7 +109,7 @@ namespace InventoryTracker.Tests
             newDish.Save();
             newDish.AddIngredient(newIngredient.GetId(), 5);
             List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{new IngredientQuantity(newIngredient, 5)};
-            List<IngredientQuantity> testList = newDish.AllIngredients();
+            List<IngredientQuantity> testList = newDish.GetAllIngredients();
             CollectionAssert.AreEqual(allIngredients, testList);
         }
 
@@ -123,7 +123,7 @@ namespace InventoryTracker.Tests
             newDish.AddIngredient(newIngredient.GetId(), 5);
             newDish.DeleteIngredient(newIngredient.GetId());
             List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
-            List<IngredientQuantity> testList = newDish.AllIngredients();
+            List<IngredientQuantity> testList = newDish.GetAllIngredients();
             CollectionAssert.AreEqual(allIngredients, testList);
         }
 
