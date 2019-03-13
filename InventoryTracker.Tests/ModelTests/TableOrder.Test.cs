@@ -152,5 +152,24 @@ namespace InventoryTracker.Tests
 
             Assert.AreEqual(countDishEntries, result);
         }
+        
+        [TestMethod]
+        public void GetAllDishes_ReturnsOrder_DishQuantityList()
+        {
+            Dish newDish = new Dish("Eggs and bacon");
+            newDish.Save();
+            int dish_id = newDish.GetId();
+            TableOrder newTableOrder = new TableOrder("4", Convert.ToDateTime("01/01/2019"));
+            newTableOrder.Save();
+            newTableOrder.AddDish(dish_id);
+            newTableOrder.AddDish(dish_id);
+
+            List<DishQuantity> testList = new List<DishQuantity>{ new DishQuantity(newDish, 2) };
+            List<DishQuantity> result = newTableOrder.GetAllDishes();
+            Console.WriteLine("{0} {1}", testList[0].GetQuantity(), result[0].GetQuantity());
+            CollectionAssert.AreEqual(testList, result);
+            //Assert.AreEqual(testList.Count, result.Count);
+            //Assert.AreEqual(2, result[0].GetQuantity());
+        }
     }
 }
