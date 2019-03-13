@@ -6,7 +6,7 @@
   <div class="row">
       <div class="col-md-12">
         <a href="#"><div class="well long">
-            <h1>Lorem ipsum sit dolor</h1>
+            <h1>@Model["order"].GetTableNumber() @Model["order"].GetOrderDate()</h1>
         </div></a>
       </div>
   </div>
@@ -24,7 +24,18 @@
       </div>
       <div class="col-md-8">
           <div class="well big">
-              <h1>Lorem ipsum sit dolor</h1>
+                <h1>Lorem ipsum sit dolor</h1>
+                @if(Model["dishes"].Count == 0)
+                {
+                    <p>No orders</p>
+                }
+                @if(Model["dishes"].Count != 0)
+                {
+                    @foreach(DishQuantity dish in Model["dishes"])
+                    {
+                    <p><a href="/orders/@tableOrder.GetId()">@tableOrder.GetTableNumber() @tableOrder.GetOrderDate().ToString("dd MMMM yyyy")</a></p>
+                    }
+                }
           </div>
       </div>
   </div>
