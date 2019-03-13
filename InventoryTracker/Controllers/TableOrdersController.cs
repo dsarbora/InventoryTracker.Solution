@@ -14,14 +14,15 @@ namespace InventoryTracker.Controllers
         List <TableOrder> allOrders = TableOrder.GetAll();
         return View(allOrders);
     }
+
     [HttpGet("/orders/new")]
     public ActionResult New()
     {
         return View();
     }
 
-    [HttpPost("/orders/new")]
-    public ActionResult Update(string tableNumber, DateTime orderDate)
+    [HttpPost("/orders")]
+    public ActionResult Create(string tableNumber, DateTime orderDate)
     {
         TableOrder newOrder = new TableOrder(tableNumber, orderDate);
         newOrder.Save();
@@ -36,19 +37,19 @@ namespace InventoryTracker.Controllers
         Dictionary<string, object> model = new Dictionary<string, object>();
         model["order"] = foundOrder;
         model["order_dishes"] = foundOrder.GetAllDishes();
-        model["all_dishes"] = Dish.GetAll();
+        model["all_dishes"] = foundOrder.GetPotentialDishes();//Dish.GetAll();
         return View(model);
     }
 
-    [HttpPost("/orders/{tableOrderid}/add_dish")]
-    public ActionResult Create(int tableOrderId, int dishId, int quantity)
+    [HttpPost("/orders/{tableOrderid}/dishes")]
+    public ActionResult Create(int tableOrderId, int dishId, int newDishQuantity)
     {
       TableOrder foundOrder = TableOrder.Find(tableOrderId);
-      foundOrder.AddDish(dishId, quantity);
+      foundOrder.AddDish(dishId, newDishQuantity);
       return RedirectToAction("Show");
     }
 
-    [HttpPost("/orders/{tableOrderid}/dishes/{dishId}/update")]
+    [HttpPost("/orders/{tableOrderid}/dishes/{dishId}")]
     public ActionResult Update(int tableOrderId, int dishId, int quantity)
     {
       TableOrder foundOrder = TableOrder.Find(tableOrderId);

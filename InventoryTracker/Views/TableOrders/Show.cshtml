@@ -26,7 +26,7 @@
             <div class="well big">
                 <h1>Lorem ipsum sit dolor</h1>
 
-                <form action="/orders/@Model["order"].GetId()/add_dish" method="post">
+                <form action="/orders/@Model["order"].GetId()/dishes" method="post">
                     
                     <label for="dishId">Add dish</label>
                     <select id="dishId" name="dishId">
@@ -35,8 +35,8 @@
                             <option value="@dish.GetId()">@dish.GetName()</option>
                         }
                     </select>
-                    <label for="quantity">Quantity</label>
-                    <input id="quantity" name="quantity" type="number" value="1" required>
+                    <label for="newDishQuantity">Quantity</label>
+                    <input id="newDishQuantity" name="newDishQuantity" type="number" value="1" required>
                     
                     <button type="submit">Add</button>
                 </form>
@@ -50,7 +50,7 @@
                     @foreach(DishQuantity dish in Model["order_dishes"])
                     {
                         <br>
-                        <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/update" method="post">
+                        <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
                             <p>Dish: @dish.GetDish().GetName()</p>
                             <label for="quantity">Quantity</label>
                             <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
