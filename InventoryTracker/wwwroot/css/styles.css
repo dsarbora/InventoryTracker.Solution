@@ -3,8 +3,8 @@
 }
 
 body{
-    background-color: #acc2a2;
-    display: block;
+    background-color: #ACC2A2;
+    display: block;  
 }
 
 .header{
@@ -16,5 +16,22 @@ body{
 }
 
 .topRow{
-    margin-top: 70px;
+    margin-top: 0px;
+}
+
+.link {
+    text-align: center;
+    color: black;
+}
+.link:hover{
+    transform: scale(1.1);
+    box-shadow: 5px 10px rgba(25, 25, 25, .1);
+}
+a:hover{
+    text-decoration: none;
+}
+
+#img-front{
+    transform:scale(.6);
+    bottom: 500px;
 }
