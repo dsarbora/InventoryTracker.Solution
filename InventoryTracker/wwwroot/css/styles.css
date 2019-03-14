@@ -36,7 +36,13 @@ a:hover{
     bottom: 500px;
 }
 
-.well {
-  width: 130px;
-  margin-right: 50px;
+table, tr, td{
+    border: 1px solid black;
 }
+
+td{
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+

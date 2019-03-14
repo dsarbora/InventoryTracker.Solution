@@ -7,17 +7,28 @@ namespace InventoryTracker.Controllers
 {
   public class IngredientsController : Controller
   {
+
       [HttpGet("/ingredients")]
       public ActionResult Index()
       {
       List <Ingredient> allIngredients = Ingredient.GetAll();
       return View(allIngredients);
     }
+
     [HttpGet("/ingredients/new")]
     public ActionResult New()
     {
       return View();
     }
+
+    [HttpPost("/ingredients")]
+    public ActionResult Create(string name, int quantity)
+    {
+      Ingredient newIngredient = new Ingredient(name, quantity);
+      newIngredient.Save();
+      return RedirectToAction("Index");
+    }
+
     [HttpGet("/ingredients/{id}")]
     public ActionResult Show(int id)
     {
