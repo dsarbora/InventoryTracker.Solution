@@ -3,11 +3,43 @@
     Layout="_Layout";
 }
 <div class="header">
-    <h1 class="title"></h1>
+    <h1 class="title">All Ingredients</h1>
 </div>
 <div id="seven" class="container">
   <div class="row">
+    <div class="col-md-2">
 
+    </div>
+    <div class="col-md-9">
+      <table>
+        <tr>
+          <td><p>Ingredient</p></td>
+          <td><p>Quantity</p></td>
+          <td><p>Edit</p></td>
+          <td><p>Delete</p></td>
+        </tr>
+        @foreach(Ingredient ingredient in Model)
+        {
+          <tr>
+            <td><p>@ingredient.GetName()</p></td>
+            <td>@ingredient.GetQuantity()</td>
+            <td>
+              <form action='ingredients/@ingredient.GetId()/edit' method="post">
+                <button type="submit">Edit</button>
+              </form>
+            <td>
+              <form action='ingredients/@ingredient.GetId()/delete' method="post">
+                <button type="submit">Delete</button>
+              </form>
+            </td>
+          
+          </tr>
+        }
+      </table>
+    </div>
+    <div class="col-md-1">
+
+    </div>
   </div>
   <div class="row">
 
