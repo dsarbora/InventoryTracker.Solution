@@ -27,7 +27,7 @@ namespace InventoryTracker.Controllers
         TableOrder newOrder = new TableOrder(tableNumber, orderDate);
         newOrder.Save();
         //TODO: redirect to add dish
-        return RedirectToAction("Index");
+        return RedirectToAction("Show");
     }
 
     [HttpGet("/orders/{tableOrderId}")]
@@ -55,8 +55,8 @@ namespace InventoryTracker.Controllers
       TableOrder foundOrder = TableOrder.Find(tableOrderId);
       foundOrder.UpdateDish(dishId, quantity);
       return RedirectToAction("Show");
-    }    
-      
+    }
+
     [HttpPost("/orders/{tableOrderid}/dishes/{dishId}/delete")]
     public ActionResult Delete(int tableOrderId, int dishId)
     {
@@ -64,14 +64,14 @@ namespace InventoryTracker.Controllers
       TableOrder foundOrder = TableOrder.Find(tableOrderId);
       foundOrder.DeleteDish(dishId);
       return RedirectToAction("Show");
-    }  
+    }
 
      [HttpGet("/orders/{tableOrderId}/edit")]
     public ActionResult Edit(int tableOrderId)
     {
       TableOrder foundTableOrder = TableOrder.Find(tableOrderId);
       return View(foundTableOrder);
-    }  
+    }
 
     [HttpPost("/orders/{tableOrderId}")]
     public ActionResult Update(int tableOrderId, string tableNumber, DateTime orderDate)
@@ -79,6 +79,6 @@ namespace InventoryTracker.Controllers
       TableOrder foundTableOrder = TableOrder.Find(tableOrderId);
       foundTableOrder.Edit(tableNumber, orderDate);
       return RedirectToAction("Show");
-    } 
+    }
   }
 }

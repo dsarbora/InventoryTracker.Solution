@@ -43,7 +43,7 @@ namespace InventoryTracker.Controllers
       model["dish"] = foundDish;
       List<IngredientQuantity> dishIngredients = foundDish.GetAllIngredients();
       model["dish_ingredients"] = dishIngredients;
-      List<Ingredient> allIngredients = Ingredient.GetAll();
+      List<Ingredient> allIngredients = foundDish.GetPotentialIngredients();
       model["all_ingredients"] = allIngredients;
       return View(model);
     }
@@ -62,15 +62,15 @@ namespace InventoryTracker.Controllers
       Dish foundDish = Dish.Find(dishId);
       foundDish.UpdateIngredient(ingredientId, quantity);
       return RedirectToAction("Show");
-    }    
-      
+    }
+
     [HttpPost("/dishes/{dishId}/ingredients/{ingredientId}/delete")]
     public ActionResult Delete(int dishId, int ingredientId)
     {
       Dish foundDish = Dish.Find(dishId);
       foundDish.DeleteIngredient(ingredientId);
       return RedirectToAction("Show");
-    } 
+    }
     [HttpGet("/dishes/{dishId}/edit")]
       public ActionResult Edit(int dishId)
       {

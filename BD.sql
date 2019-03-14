@@ -8,7 +8,7 @@ CREATE TABLE shipments (id serial PRIMARY KEY, shipment_date date);
 CREATE TABLE ingredients_shipments (id serial PRIMARY KEY, ingredient_id INT, shipment_id INT, quantity INT);
 
 -- updated -- CREATE TABLE orders (id serial PRIMARY KEY, dish_id INT, quantity INT, order_date DATE);
-DROP TABLE orders;
+-- DROP TABLE orders;
 CREATE TABLE table_orders (id serial PRIMARY KEY, table_number VARCHAR(10), order_date DATE);
 -- new --
 -- update : add dish_quantity INT --
