@@ -34,9 +34,10 @@ namespace InventoryTracker.Controllers
         }
 
         [HttpGet("shipments/{id}/edit")]
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+          Shipment shipment = Shipment.Find(id);
+            return View(shipment);
         }
 
         [HttpPost("/shipments/create")]

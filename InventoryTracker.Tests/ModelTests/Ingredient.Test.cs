@@ -118,5 +118,13 @@ namespace InventoryTracker.Tests
             List<Dish> testList = newIngredient.GetDishes();
             CollectionAssert.AreEqual(allCeleryDish, testList);
         }
+
+        public void Save_AssignsId_True()
+        {
+            Ingredient newIngredient = new Ingredient("celery");
+            newIngredient.Save();
+            Ingredient foundIngredient = Ingredient.Find(newIngredient.GetId());
+            Assert.AreEqual(newIngredient.GetId(), foundIngredient.GetId());
+        }
     }
 }

@@ -172,7 +172,7 @@ namespace InventoryTracker.Models
             List<Dish> allIngredientDishes = new List<Dish>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM ingredients JOIN ingredients_dishes id ON( id.ingredient_id = ingredients.id) JOIN dishes ON(dishes.id=id.dish_id) WHERE id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM ingredients JOIN ingredients_dishes i_d ON( i_d.ingredient_id = ingredients.id) JOIN dishes ON(dishes.id=i_d.dish_id) WHERE ingredients.id=@id", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             while(rdr.Read())

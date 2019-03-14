@@ -18,16 +18,40 @@ namespace InventoryTracker.Controllers
     {
       return View();
     }
-    [HttpGet("/ingredients/show")]
-    public ActionResult Show()
+    [HttpGet("/ingredients/{id}")]
+    public ActionResult Show(int id)
     {
-      return View();
+      Ingredient ingredient = Ingredient.Find(id);
+      List<Dish> ingredientDishes = ingredient.GetDishes();
+      List<Shipment> ingredientShipments = ingredient.GetShipments();
+      Dictionary<string, object> model = new Dictionary<string, object>();
+      model.Add("ingredient", ingredient);
+      model.Add("ingredientDishes", ingredientDishes);
+      model.Add("ingredientShipments", ingredientShipments);
+      return View(model);
     }
 
     [HttpGet("/ingredients/edit")]
-    public ActionResult Edit()
+    public ActionResult Edit(int id)
     {
-      return View();
+      Ingredient ingredient = Ingredient.Find(id);
+      return View(ingredient);
+    }
+
+    [HttpPost("/ingredients/{ingredientId}")]
+    public ActionResult Update(int ingredientId, string name, int quantity)
+    {
+      Ingredient ingredient = Ingredient.Find(ingredientId);
+      ingredient.Edit(name, quantity);
+      return RedirectToAction("Show", new {id=ingredientId});
+    }
+
+    [HttpPost("/ingredients/{id}/delete")]
+    public ActionResult Delete(int id)
+    {
+      Ingredient ingredient = Ingredient.Find(id);
+      ingredient.Delete();
+      return RedirectToAction("Index");
     }
   }
 }

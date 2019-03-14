@@ -185,6 +185,32 @@ namespace InventoryTracker.Models
       return allIngredients;
     }
 
+    public List<Ingredient> GetPotentialIngredients()
+    {
+      List<Ingredient> allPotentialIngredients = new List<Ingredient>{};
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients", conn);// WHERE ingredients.id NOT IN (SELECT ingredient_id FROM ingredients_shipments WHERE shipment_id=@shipment_id);", conn);
+      cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
+      MySqlDataReader rdr = cmd.ExecuteReader();
+      while(rdr.Read())
+      {
+        int id=rdr.GetInt32(0);
+        string name=rdr.GetString(1);
+        int quantity=rdr.GetInt32(2);
+    
+        Ingredient newIngredient = new Ingredient(name, quantity, id);
+        allPotentialIngredients.Add(newIngredient);
+      }
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+      Console.WriteLine(allPotentialIngredients.Count);
+      return allPotentialIngredients;
+    }
+
     public override bool Equals(System.Object otherShipment)
     {
       if(!(otherShipment is Shipment))

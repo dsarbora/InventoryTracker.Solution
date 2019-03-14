@@ -102,5 +102,23 @@ namespace InventoryTracker.Tests
             CollectionAssert.AreEqual(testList, allIngredients);
         }
 
+        [TestMethod]
+        public void GetPotentialIngredients_GetsOnlyPotentialIngredients_IngredientList()
+        {
+            Shipment shipment = new Shipment(Convert.ToDateTime("3/12/2019"));
+            Ingredient one = new Ingredient("celery");
+            Ingredient two = new Ingredient("carrots");
+            Ingredient three = new Ingredient("juice");
+            Ingredient four = new Ingredient("carrot juice");
+            shipment.AddIngredient(one.GetId(), 5);
+            shipment.AddIngredient(two.GetId(), 5);
+            List<Ingredient> potentialIngredients = new List<Ingredient>{three, four};
+            List<Ingredient> testList = shipment.GetPotentialIngredients();
+            CollectionAssert.AreEqual(potentialIngredients, testList);
+
+
+            
+        }
+
     }
 }

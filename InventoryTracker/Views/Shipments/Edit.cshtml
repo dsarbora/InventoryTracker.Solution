@@ -7,7 +7,30 @@
 </div>
 <div id="fourteen" class="container">
   <div class="row">
+    <div class="col-md-1">
 
+    </div>
+    <div class="col-md-5">
+      @foreach(Ingredient ingredient in Model["potentialIngredients"])
+      {
+        <form action='/shipments/@Model["shipment"].GetId()/ingredients/new' method="post">
+        <input type="hidden" name="ingredientId" id="ingredientId" value=@ingredient.GetId()>
+        <button type="submit" class="btn btn-success">@ingredient.GetName()<button>
+        </form>
+        }
+    </div>
+    <div class="col-md-5">
+      @foreach(Ingredient ingredient in Model["shipmentIngredients"])
+      {
+        <form action='/shipments/@Model["shipment"].GetId()/ingredients/delete' method="post">
+        <input type="hidden" name="ingredientId" id="ingredidientId" value="@ingredient.GetId()">
+        <button type="submit" class="btn btn-danger">@ingredient.GetName()</button>
+        </form>
+      }
+    </div>
+    <div class="col-md-1">
+
+    </div>
   </div>
   <div class="row">
 
