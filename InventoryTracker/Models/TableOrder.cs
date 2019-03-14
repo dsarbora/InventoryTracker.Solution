@@ -262,5 +262,30 @@ namespace InventoryTracker.Models
 
             return order;
         }
+
+        public List<Dish> GetPotentialDishes()
+        {
+            List<Dish> allDishes = new List<Dish>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM dishes WHERE id NOT IN (SELECT dish_id FROM orders WHERE table_order_id=@id)", conn);
+            cmd.Parameters.Add(new MySqlParameter("@id", Id));
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            string name = "";
+            int id = 0;
+            while(rdr.Read())
+            {
+                name = rdr.GetString(1);
+                id = rdr.GetInt32(0);
+                Dish newDish = new Dish(name, id);
+                allDishes.Add(newDish); 
+            }
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+            return allDishes;
+        }
     }
 }
