@@ -49,7 +49,7 @@ namespace InventoryTracker.Controllers
     }
 
     [HttpPost("/dishes/{dishId}/ingredients")]
-    public ActionResult CreateIngredient(int dishId, int ingredientId, int quantity)
+    public ActionResult Create(int dishId, int ingredientId, int quantity)
     {
       Dish foundDish = Dish.Find(dishId);
       foundDish.AddIngredient(ingredientId, quantity);
