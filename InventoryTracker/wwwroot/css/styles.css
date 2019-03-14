@@ -4,7 +4,7 @@
 
 body{
     background-color: #ACC2A2;
-    display: block;  
+    display: block;
 }
 
 .header{
@@ -34,4 +34,9 @@ a:hover{
 #img-front{
     transform:scale(.6);
     bottom: 500px;
+}
+
+.well {
+  width: 130px;
+  margin-right: 50px;
 }
