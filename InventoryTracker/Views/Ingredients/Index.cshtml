@@ -7,6 +7,9 @@
 </div>
 <div id="seven" class="container">
   <div class="row">
+    <a href="/ingredients/new" class="btn btn-info">Add new Ingredient</a>
+  </div>
+  <div class="row">
     <div class="col-md-2">
 
     </div>
@@ -15,33 +18,32 @@
         <tr>
           <td><p>Ingredient</p></td>
           <td><p>Quantity</p></td>
-          <td><p>Edit</p></td>
-          <td><p>Delete</p></td>
+          <!-- <td><p>Edit</p></td>
+          <td><p>Delete</p></td> -->
+    
         </tr>
         @foreach(Ingredient ingredient in Model)
         {
           <tr>
             <td><p>@ingredient.GetName()</p></td>
-            <td>@ingredient.GetQuantity()</td>
-            <td>
-              <form action='ingredients/@ingredient.GetId()/edit' method="post">
+            <td><p>@ingredient.GetQuantity()</p></td>
+            <!-- <td>
+              <form action='ingredients/@ingredient.GetId()/update' method="post">
+                <input name="quantity" id="quantity" value='@ingredient.GetQuantity()' required type="number">
                 <button type="submit">Edit</button>
               </form>
             <td>
               <form action='ingredients/@ingredient.GetId()/delete' method="post">
                 <button type="submit">Delete</button>
               </form>
-            </td>
+            </td> -->
           
           </tr>
         }
       </table>
     </div>
     <div class="col-md-1">
-
+      
     </div>
-  </div>
-  <div class="row">
-
   </div>
 </div>

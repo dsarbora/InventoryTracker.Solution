@@ -35,3 +35,13 @@ a:hover{
     transform:scale(.6);
     bottom: 500px;
 }
+
+table, tr, td{
+    border: 1px solid black;
+}
+
+td{
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
