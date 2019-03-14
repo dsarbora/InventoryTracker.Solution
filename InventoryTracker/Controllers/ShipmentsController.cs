@@ -31,8 +31,6 @@ namespace InventoryTracker.Controllers
             model.Add("allIngredients", allIngredients);
             model.Add("shipmentIngredients", shipmentIngredients);
             return View(model);
-
-            return View();
         }
 
         [HttpGet("shipments/{id}/edit")]
@@ -63,6 +61,14 @@ namespace InventoryTracker.Controllers
           Shipment newShipment = Shipment.Find(shipmentId);
           newShipment.EditIngredientQuantity(ingredientId, quantity);
           return RedirectToAction("Show", new {id=newShipment.GetId()});
+        }
+
+        [HttpPost("/shipments/{shipmentId}/delete")]
+        public ActionResult Delete(int shipmentId)
+        {
+          Shipment newShipment = Shipment.Find(shipmentId);
+          newShipment.Delete();
+          return RedirectToAction("Index");
         }
   }
 }

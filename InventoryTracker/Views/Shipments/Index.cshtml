@@ -10,6 +10,15 @@
     <p><a href="/shipments/new">Recieve a new shipment</a></p>
   </div>
   <div class="row">
-
+    <div class="col-md-3">
+      @foreach(Shipment shipment in Model)
+        {
+          <p><a href="/shipments/@shipment.GetId()">@shipment.GetId(): @shipment.GetDate()</a></p>
+        }
+    </div>
+    <div class="col-md-9">
+      <a class="btn btn-info" href="/">Home</a>
+    </div>
+    
   </div>
 </div>
