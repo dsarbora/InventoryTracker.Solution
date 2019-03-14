@@ -27,6 +27,14 @@ namespace InventoryTracker.Controllers
       return RedirectToAction("Show", new { dishId = newDish.GetId() });
     }
 
+    [HttpPost("/dishes/{dishId}/delete")]
+    public ActionResult Delete(int dishId)
+    {
+      Dish foundDish = Dish.Find(dishId);
+      foundDish.Delete();
+      return RedirectToAction("Index");
+    }
+
     [HttpPost("/dishes/{dishId}")]
     public ActionResult Update(int dishId, string name)
     {
