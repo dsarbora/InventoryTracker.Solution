@@ -190,7 +190,7 @@ namespace InventoryTracker.Models
       List<Ingredient> allPotentialIngredients = new List<Ingredient>{};
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients", conn);// WHERE ingredients.id NOT IN (SELECT ingredient_id FROM ingredients_shipments WHERE shipment_id=@shipment_id);", conn);
+      MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredient_id FROM ingredients_shipments WHERE shipment_id=@shipment_id);", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       MySqlDataReader rdr = cmd.ExecuteReader();
       while(rdr.Read())

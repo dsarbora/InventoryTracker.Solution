@@ -110,6 +110,11 @@ namespace InventoryTracker.Tests
             Ingredient two = new Ingredient("carrots");
             Ingredient three = new Ingredient("juice");
             Ingredient four = new Ingredient("carrot juice");
+            shipment.Save(); 
+            one.Save(); 
+            two.Save(); 
+            three.Save(); 
+            four.Save();
             shipment.AddIngredient(one.GetId(), 5);
             shipment.AddIngredient(two.GetId(), 5);
             List<Ingredient> potentialIngredients = new List<Ingredient>{three, four};
