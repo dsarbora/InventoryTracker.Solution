@@ -64,6 +64,21 @@ namespace InventoryTracker.Controllers
       TableOrder foundOrder = TableOrder.Find(tableOrderId);
       foundOrder.DeleteDish(dishId);
       return RedirectToAction("Show");
-    }     
+    }  
+
+     [HttpGet("/orders/{tableOrderId}/edit")]
+    public ActionResult Edit(int tableOrderId)
+    {
+      TableOrder foundTableOrder = TableOrder.Find(tableOrderId);
+      return View(foundTableOrder);
+    }  
+
+    [HttpPost("/orders/{tableOrderId}")]
+    public ActionResult Update(int tableOrderId, string tableNumber, DateTime orderDate)
+    {
+      TableOrder foundTableOrder = TableOrder.Find(tableOrderId);
+      foundTableOrder.Edit(tableNumber, orderDate);
+      return RedirectToAction("Show");
+    } 
   }
 }

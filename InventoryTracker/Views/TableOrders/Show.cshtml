@@ -8,6 +8,9 @@
         <div class="well long">
             <h1>@Model["order"].GetTableNumber() @Model["order"].GetOrderDate()</h1>
         </div>
+        <form action="/orders/@Model["order"].GetId()/edit">
+            <button>Edit</button>
+        </form>
       </div>
   </div>
   <div class="row">

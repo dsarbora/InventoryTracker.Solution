@@ -19,12 +19,20 @@ namespace InventoryTracker.Controllers
       return View();
     }
 
-    [HttpPost("/dishes/new")]
+    [HttpPost("/dishes")]
     public ActionResult Create(string name)
     {
       Dish newDish = new Dish(name);
       newDish.Save();
       return RedirectToAction("Show", new { dishId = newDish.GetId() });
+    }
+
+    [HttpPost("/dishes/{dishId}")]
+    public ActionResult Update(int dishId, string name)
+    {
+      Dish foundDish = Dish.Find(dishId);
+      foundDish.Edit(name);
+      return RedirectToAction("Show");
     }
 
     [HttpGet("/dishes/{dishId}")]
@@ -40,7 +48,7 @@ namespace InventoryTracker.Controllers
       return View(model);
     }
 
-    [HttpPost("/dishes/{dishId}/add_ingredient")]
+    [HttpPost("/dishes/{dishId}/ingredients")]
     public ActionResult CreateIngredient(int dishId, int ingredientId, int quantity)
     {
       Dish foundDish = Dish.Find(dishId);
@@ -48,8 +56,8 @@ namespace InventoryTracker.Controllers
       return RedirectToAction("Show");
     }
 
-    [HttpPost("/dishes/{dishId}/ingredients/{ingredientId}/update")]
-    public ActionResult UpdateIngredient(int dishId, int ingredientId, int quantity)
+    [HttpPost("/dishes/{dishId}/ingredients/{ingredientId}")]
+    public ActionResult Update(int dishId, int ingredientId, int quantity)
     {
       Dish foundDish = Dish.Find(dishId);
       foundDish.UpdateIngredient(ingredientId, quantity);
@@ -57,18 +65,17 @@ namespace InventoryTracker.Controllers
     }    
       
     [HttpPost("/dishes/{dishId}/ingredients/{ingredientId}/delete")]
-    public ActionResult DeleteIngredient(int dishId, int ingredientId)
+    public ActionResult Delete(int dishId, int ingredientId)
     {
-      Console.WriteLine(" Delete: {0} {1}", dishId, ingredientId);
       Dish foundDish = Dish.Find(dishId);
       foundDish.DeleteIngredient(ingredientId);
       return RedirectToAction("Show");
     } 
-    [HttpGet("/dishes/edit")]
-  
-      public ActionResult Edit()
+    [HttpGet("/dishes/{dishId}/edit")]
+      public ActionResult Edit(int dishId)
       {
-        return View();
+        Dish foundDish = Dish.Find(dishId);
+        return View(foundDish);
       }
 
     }

@@ -8,13 +8,16 @@
         <a href="#"><div class="well long">
             <h1>@Model["dish"].GetName()</h1>
         </div></a>
+        <form action="/dishes/@Model["dish"].GetId()/edit">
+            <button>Edit</button>
+        </form>
       </div>
   </div>
   <div class="row">
       <div class="col-md-4">
           <div class="well stacked">
               <h1>Lorem</h1>
-              <form action="/dishes/@Model["dish"].GetId()/add_ingredient" method="post">
+              <form action="/dishes/@Model["dish"].GetId()/ingredients" method="post">
                     
                     <label for="ingredientId">Add ingredient</label>
                     <select id="ingredientId" name="ingredientId">
@@ -50,7 +53,7 @@
                     @foreach(IngredientQuantity ingredient in Model["dish_ingredients"])
                     {
                         <br>
-                        <form action="/dishes/@Model["dish"].GetId()/ingredients/@ingredient.GetIngredient().GetId()/update" method="post">
+                        <form action="/dishes/@Model["dish"].GetId()/ingredients/@ingredient.GetIngredient().GetId()" method="post">
                             <p>Ingredient: @ingredient.GetIngredient().GetName()</p>
                             <label for="quantity">Quantity</label>
                             <input id="quantity" name="quantity" type="number" value="@ingredient.GetQuantity()"required>

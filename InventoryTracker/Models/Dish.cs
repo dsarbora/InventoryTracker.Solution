@@ -105,6 +105,7 @@ namespace InventoryTracker.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = new MySqlCommand("UPDATE dishes SET name=@name WHERE id=@id", conn);
+            Console.WriteLine(newName);
             MySqlParameter prmName = new MySqlParameter("@name", newName);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
             cmd.Parameters.Add(prmName);
