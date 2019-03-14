@@ -7,7 +7,31 @@
     </head>
     <body>
         <div class="container">
-            @RenderBody()
+            <br>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-1">
+                  <a href="/"><div class="well link">
+                      <h4>Home</h4>
+                  </div></a>
+                  <a href="/ingredients"><div class="well link">
+                      <h4>Ingredients</h4>
+                  </div></a>
+                  <a href="/orders"><div class="well link">
+                      <h4>Orders</h4>
+                  </div></a>
+                  <a href="/shipments"><div class="well link">
+                      <h4>Shipments</h4>
+                  </div></a>
+                  <a href="/dishes"><div class="well link">
+                      <h4>Dishes</h4>
+                  </div></a>
+                </div>
+                <div class="col-md-11">
+                  @RenderBody()
+                </div>
+            </div>
         </div>
     </body>
 </html>
