@@ -7,7 +7,7 @@
 </div>
 <div id="eleven" class="container">
   <div class="row">
-  
+
   @if(Model.Count == 0)
   {
     <p>No orders</p>
@@ -16,7 +16,7 @@
   {
     @foreach(TableOrder tableOrder in Model)
     {
-      <p><a href="/orders/@tableOrder.GetId()">@tableOrder.GetTableNumber() @tableOrder.GetOrderDate().ToString("dd MMMM yyyy")</a></p>
+      <p><a href="/orders/@tableOrder.GetId()">Table number @tableOrder.GetTableNumber() @tableOrder.GetOrderDate().ToString("dd MMMM yyyy")</a></p>
     }
   }
   </div>

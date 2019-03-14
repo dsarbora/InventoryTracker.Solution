@@ -15,9 +15,9 @@ namespace InventoryTracker.Models
             Id = id;
         }
 
-        public string GetName() 
+        public string GetName()
         {
-            return Name; 
+            return Name;
         }
         public int GetId()
         {
@@ -51,7 +51,7 @@ namespace InventoryTracker.Models
                 name = rdr.GetString(1);
                 id = rdr.GetInt32(0);
                 Dish newDish = new Dish(name, id);
-                allDishes.Add(newDish); 
+                allDishes.Add(newDish);
             }
             conn.Close();
             if(conn!=null)
@@ -85,7 +85,7 @@ namespace InventoryTracker.Models
             MySqlParameter prmId = new MySqlParameter("@id", id);
             cmd.Parameters.Add(prmId);
             var rdr = cmd.ExecuteReader() as MySqlDataReader;
-            
+
             string name = "";
             while(rdr.Read())
             {
@@ -225,5 +225,30 @@ namespace InventoryTracker.Models
             }
             return allIngredients;
         }
+
+        public List<Ingredient> GetPotentialIngredients()
+        {
+            List<Ingredient> allIngredients = new List<Ingredient>{};
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredient_id FROM ingredients_dishes WHERE dish_id=@id);", conn);
+            cmd.Parameters.Add(new MySqlParameter("@id", Id));
+            MySqlDataReader rdr = cmd.ExecuteReader();
+            while(rdr.Read())
+            {
+                int id = rdr.GetInt32(0);
+                string name=rdr.GetString(1);
+                int quantity = rdr.GetInt32(2);
+                Ingredient ingredient = new Ingredient(name, quantity, id);
+                allIngredients.Add(ingredient);
+            }
+            conn.Close();
+            if(conn!=null)
+            {
+                conn.Dispose();
+            }
+            return allIngredients;
+        }
+
     }
 }
