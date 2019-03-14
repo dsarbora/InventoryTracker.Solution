@@ -4,7 +4,12 @@
 }
 <div id="seventeen" class="container">
   <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-2">
+          <form action='/shipments/@Model["shipment"].GetId()/delete' method="post">
+            <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+      </div>
+      <div class="col-md-10">
         <div class="well long">
             <h1>Shipment @Model["shipment"].GetId() Recieved @Model["shipment"].GetDate()</h1>
         </div>
@@ -28,6 +33,7 @@
                 <button type="submit">Add Ingredients</button>
             </form>
           </div>
+          <a class="btn btn-info" href="/shipments">Back to shipments</a>
       </div>
       <div class="col-md-8">
           <div class="well big">

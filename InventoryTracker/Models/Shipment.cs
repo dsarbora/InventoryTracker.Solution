@@ -86,6 +86,20 @@ namespace InventoryTracker.Models
       return allShipments;
     }
 
+    public void Delete()
+    {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = new MySqlCommand("DELETE FROM shipments WHERE id=@id; DELETE FROM ingredients_shipments WHERE shipment_id=@id", conn);
+      cmd.Parameters.Add(new MySqlParameter("@id", Id));
+      cmd.ExecuteNonQuery();
+      conn.Close();
+      if(conn!=null)
+      {
+        conn.Dispose();
+      }
+    }
+
     public static void ClearAll()
     {
       MySqlConnection conn = DB.Connection();
