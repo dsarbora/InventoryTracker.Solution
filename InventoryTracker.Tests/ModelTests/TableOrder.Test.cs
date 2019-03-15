@@ -56,7 +56,6 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void Equals_ChecksIfTwoOrdersAreTheSame_True()
         {
-            int id = 0;
             string tableNumber = "4";
             DateTime orderDate = Convert.ToDateTime("01/01/2019");
             TableOrder firstOrder = new TableOrder(tableNumber, orderDate);

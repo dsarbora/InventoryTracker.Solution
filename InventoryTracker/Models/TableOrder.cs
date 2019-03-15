@@ -158,7 +158,7 @@ namespace InventoryTracker.Models
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            //
+            // 
             MySqlCommand cmd = new MySqlCommand("INSERT INTO orders (dish_id, table_order_id, dish_quantity) VALUES (@dish_id, @id, @quantity); UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total;", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);

@@ -5,21 +5,19 @@
 <div class="header">
     <h1 class="title">Shipment Index</h1>
 </div>
-<div id="fifteen" class="container">
-  <div class="row">
-    <p><a href="/shipments/new">Add a new shipment</a></p>
+
+<div class="row">
+  <div class="col-md-3">
+    @foreach(Shipment shipment in Model)
+      {
+        <p><a href="/shipments/@shipment.GetId()">@shipment.GetId(): @shipment.GetDate()</a></p>
+      }
   </div>
-  <div class="row">
-    <div class="col-md-3">
-      @foreach(Shipment shipment in Model)
-        {
-          <p><a href="/shipments/@shipment.GetId()">@shipment.GetId(): @shipment.GetDate()</a></p>
-        }
-    </div>
-    <div class="col-md-9">
-      <a class="btn btn-info" href="/">Home</a>
-      <a class="btn btn-info" href="/ingredients">Show Inventory</a>
-    </div>
+  <div class="col-md-6">
     
   </div>
+  <div class="col-md-3">
+    <p><a class="well link" href="/shipments/new">Add a new shipment</a></p>
+  </div>
+  
 </div>

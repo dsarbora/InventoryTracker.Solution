@@ -2,50 +2,50 @@
 @{
     Layout="_Layout";
 }
-<div id="seventeen" class="container">
-  <div class="row">
-      <div class="col-md-2">
-          <form action='/shipments/@Model["shipment"].GetId()/delete' method="post">
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-      </div>
-      <div class="col-md-10">
-        <div class="well long">
-            <h1>Shipment @Model["shipment"].GetId() Recieved @Model["shipment"].GetDate().ToShortDateString()</h1>
-        </div>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-md-4">
-          <div class="well stacked">
-              <h2>Edit shipment</h2>
-          </div>
-          <div class="well stacked">
-              
-            <form action='/shipments/@Model["shipment"].GetId()/add_ingredient' method="post">
-                <label for="ingredientId">Add Ingredient</label>
-                <select id="ingredientId" name="ingredientId">
-                @foreach(Ingredient ingredient in Model["allIngredients"])
-                {        
-                    <option value="@ingredient.GetId()">@ingredient.GetName()</option>          
-                }        
-                </select>
-                <button type="submit">Add Ingredients</button>
-            </form>
-          </div>
-          <a class="btn btn-info" href="/shipments">Back to shipments</a>
-      </div>
-      <div class="col-md-8">
-          <div class="well big">
-              @foreach(IngredientQuantity ingredient in Model["shipmentIngredients"])
-              {
-                  <form action='/shipments/@Model["shipment"].GetId()/ingredients/@ingredient.GetIngredient().GetId()/edit' method="post">
-                    <label for="quantity">@ingredient.GetIngredient().GetName()</label>
-                    <input id="quantity" name="quantity" value="@ingredient.GetQuantity()">
-                    <button type="submit">Edit</button>
-                  </form>
-              }
-          </div>
-      </div>
-  </div>
+
+<div class="row">
+    <div class="col-md-2">
+        <form action='/shipments/@Model["shipment"].GetId()/delete' method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+    <div class="col-md-10">
+    <div class="long well display">
+        <h1>Shipment @Model["shipment"].GetId() Recieved @Model["shipment"].GetDate().ToShortDateString()</h1>
+    </div>
+    </div>
 </div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="well stacked">
+        <form action='/shipments/@Model["shipment"].GetId()/ingredients/new' method="post">
+            <label for="ingredientId">Add Ingredient</label>
+            <select id="ingredientId" name="ingredientId">
+            @foreach(Ingredient ingredient in Model["allIngredients"])
+            {        
+                <option value="@ingredient.GetId()">@ingredient.GetName()</option>          
+            }        
+            </select>
+            <label for="quantity">Quantity</label>
+            <input name="quantity" id="quantity" type="number" required value="positive">
+            <button type="submit">Add Ingredients</button>
+        </form>
+        </div>
+        <a href='/shipments/@Model["shipment"].GetId()/edit'><div class="well link stacked">
+            <h2>Edit shipment</h2>
+        </div></a>
+    </div>
+    <div class="col-md-8">
+        <div class="big well display">
+            @foreach(IngredientQuantity ingredient in Model["shipmentIngredients"])
+            {
+                <form action='/shipments/@Model["shipment"].GetId()/ingredients/@ingredient.GetIngredient().GetId()/edit' method="post">
+                <label for="quantity">@ingredient.GetIngredient().GetName()</label>
+                <input id="quantity" name="quantity" value="@ingredient.GetQuantity()">
+                <button type="submit">Edit</button>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
