@@ -36,7 +36,7 @@ namespace InventoryTracker.Models
             cmd.Parameters.Add(prmQuantity);
             cmd.ExecuteNonQuery();
             Id=(int)cmd.LastInsertedId;
-            conn.Close();            
+            conn.Close();
             if(conn!=null)
             {
                 conn.Dispose();
@@ -74,7 +74,7 @@ namespace InventoryTracker.Models
             List<Ingredient> allIngredients = new List<Ingredient>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients;", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients ORDER BY name;", conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
             while(rdr.Read())
             {
@@ -146,7 +146,7 @@ namespace InventoryTracker.Models
             if(conn!=null)
             {
                 conn.Dispose();
-            }            
+            }
         }
 
         public List<Shipment> GetShipments()
@@ -172,7 +172,7 @@ namespace InventoryTracker.Models
             List<Dish> allIngredientDishes = new List<Dish>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM ingredients JOIN ingredients_dishes i_d ON( i_d.ingredient_id = ingredients.id) JOIN dishes ON(dishes.id=i_d.dish_id) WHERE ingredients.id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM ingredients JOIN ingredients_dishes i_d ON( i_d.ingredient_id = ingredients.id) JOIN dishes ON(dishes.id=i_d.dish_id) WHERE ingredients.id=@id ORDER BY dishes.name;", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             while(rdr.Read())
@@ -189,7 +189,7 @@ namespace InventoryTracker.Models
             }
             return allIngredientDishes;
         }
-        
+
         public override bool Equals(System.Object otherIngredient)
         {
             if(!(otherIngredient is Ingredient))
