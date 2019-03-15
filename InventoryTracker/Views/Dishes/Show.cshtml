@@ -3,13 +3,19 @@
     Layout="_Layout";
 }
       <div class="col-md-12">
-            <div class="well long">
-                <h1>@Model["dish"].GetName()</h1>
+        <div class="well long">
+          
+            <h1 class="left">@Model["dish"].GetName()</h1>
+            <div class="right">
                 <form action='/dishes/@Model["dish"].GetId()/edit'>
-                    <button>Change Name</button>
+                    <button class="edit">Change Name</button>
                 </form>
-            </div></a>
+                <form action='/dishes/@Model["dish"].GetId()/delete'>
+                    <button class="delete" type="submit">Delete</button> 
+                </form>
+            </div>
         
+        </div>
       </div>
   </div>
   <div class="row">
@@ -22,7 +28,7 @@
               }
               @if(Model["all_ingredients"].Count != 0)
               {
-                <form action="/dishes/@Model["dish"].GetId()/ingredients" method="post">
+                <form action='/dishes/@Model["dish"].GetId()/ingredients' method="post">
 
                       <label for="ingredientId">Add ingredient</label>
                       <select id="ingredientId" name="ingredientId">
@@ -37,12 +43,6 @@
                       <button type="submit">Add</button>
                 </form>
               }
-          </div>
-          <div class="well stacked">
-              <h1></h1>
-          </div>
-          <div class="well stacked">
-              <h1></h1>
           </div>
       </div>
       <div class="col-md-6">

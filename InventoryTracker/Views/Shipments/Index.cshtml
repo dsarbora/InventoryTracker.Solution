@@ -8,13 +8,14 @@
 
 <div class="row">
   <div class="col-md-3">
+    
+  </div>
+  <div class="col-md-6">
+    <h4 class="list">A list of all shipments:</h4>
     @foreach(Shipment shipment in Model)
       {
         <p><a href="/shipments/@shipment.GetId()">@shipment.GetId(): @shipment.GetDate()</a></p>
       }
-  </div>
-  <div class="col-md-6">
-    
   </div>
   <div class="col-md-3">
     <p><a class="well link" href="/shipments/new">Add a new shipment</a></p>
