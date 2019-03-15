@@ -24,38 +24,41 @@ CREATE TABLE orders (id serial PRIMARY KEY, table_order_id int, dish_id int, dis
 INSERT INTO orders...;
 
 UPDATE ing SET ing.quantity = ing.quantity - ord.total
-FROM ingredients ing JOIN 
-(SELECT i_d.ingredient_id AS ingredient_id, i_d.quantity * dish_quantity AS total 
-FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id 
-WHERE table_order_id=@tableOrderId and orders.dish_id=@dish_id) ord 
+FROM ingredients ing JOIN
+(SELECT i_d.ingredient_id AS ingredient_id, i_d.quantity * dish_quantity AS total
+FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id
+WHERE table_order_id=@tableOrderId and orders.dish_id=@dish_id) ord
 ON ing.id=ord.ingredient_id
 
 -- On update and delete
-UPDATE ing SET ing.quantity = ing.quantity - ord.total
-FROM ingredients ing JOIN 
-(SELECT i_d.ingredient_id AS ingredient_id, i_d.quantity * (@newQuantity - dish_quantity) AS total 
-FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id 
-WHERE table_order_id=@tableOrderId and orders.dish_id=@dish_id) ord 
+UPDATE
+ingredients ing INNER JOIN
+(SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (@newQuantity - dish_quantity) AS total
+FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id
+WHERE table_order_id=@id and orders.dish_id=@dish_id) ord
 ON ing.id=ord.ingredient_id
+SET ing.quantity = ing.quantity - ord.total;
 
 UPDATE / DELETE orders...;
 
 -------------- SHIPMENTS ------------
 
 -- On insert
-UPDATE ing SET ing.quantity = ing.quantity + i_s.quantity FROM 
+UPDATE ingredients ing INNER JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id WHERE i_s.shipment_id=@id SET ing.quantity = ing.quantity + i_s.quantity;
+
+SELECT * FROM ingredients ing Inner JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id WHERE i_s.shipment_id=1@id
+
+UPDATE ingredients ing
+INNER JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id
+WHERE i_s.shipment_id=1
+SET ing.quantity = ing.quantity + i_s.quantity
 
 
-
-
-
-
-
-UPDATE 
-ingredients ing INNER JOIN 
-(SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (@newQuantity - dish_quantity) AS total 
-FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id 
-WHERE table_order_id=@id and orders.dish_id=@dish_id) ord 
+UPDATE
+ingredients ing INNER JOIN
+(SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (@newQuantity - dish_quantity) AS total
+FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id
+WHERE table_order_id=@id and orders.dish_id=@dish_id) ord
 ON ing.id=ord.ingredient_id
 SET ing.quantity = ing.quantity - ord.total;
 

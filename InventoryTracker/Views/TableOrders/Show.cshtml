@@ -11,6 +11,9 @@
         <form action="/orders/@Model["order"].GetId()/edit">
             <button>Edit</button>
         </form>
+        <form action="/orders/@Model["order"].GetId()/delete" method="post">
+            <button type="submit">Delete</button>
+        </form>
       </div>
   </div>
   <div class="row">

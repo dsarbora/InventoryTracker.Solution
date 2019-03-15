@@ -26,8 +26,15 @@ namespace InventoryTracker.Controllers
     {
         TableOrder newOrder = new TableOrder(tableNumber, orderDate);
         newOrder.Save();
-        //TODO: redirect to add dish
         return RedirectToAction("Show", new { tableOrderId = newOrder.GetId() });
+    }
+
+    [HttpPost("/orders/{tableOrderId}/delete")]
+    public ActionResult Delete(int tableOrderId)
+    {
+        TableOrder foundOrder = TableOrder.Find(tableOrderId);
+        foundOrder.Delete();
+        return RedirectToAction("Index");
     }
 
     [HttpGet("/orders/{tableOrderId}")]

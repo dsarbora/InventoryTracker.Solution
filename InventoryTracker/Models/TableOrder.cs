@@ -143,7 +143,7 @@ namespace InventoryTracker.Models
         {
             if(!(otherOrder is TableOrder))
             { return false; }
-            
+
             else
             {
                 TableOrder newOrder = (TableOrder)otherOrder;
@@ -155,11 +155,11 @@ namespace InventoryTracker.Models
         }
 
         public void AddDish(int dishId, int quantity)
-        {   
+        {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            // 
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO orders (dish_id, table_order_id, dish_quantity) VALUES (@dish_id, @id, @quantity); UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (-dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total;", conn);
+            //
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO orders (dish_id, table_order_id, dish_quantity) VALUES (@dish_id, @id, @quantity); UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total;", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
@@ -175,10 +175,10 @@ namespace InventoryTracker.Models
         }
 
         public void DeleteDish(int dishId)
-        {   
+        {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total; DELETE FROM orders WHERE dish_id=@dish_id and table_order_id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (-dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total; DELETE FROM orders WHERE dish_id=@dish_id and table_order_id=@id", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
             MySqlParameter prmId = new MySqlParameter("@id", Id);
@@ -192,7 +192,7 @@ namespace InventoryTracker.Models
         }
 
         public void UpdateDish(int dishId, int quantity)
-        {   
+        {
             MySqlConnection conn = DB.Connection();
             conn.Open();
             MySqlCommand cmd = new MySqlCommand("UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (@quantity - dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total; UPDATE orders SET dish_quantity=@quantity WHERE dish_id=@dish_id and table_order_id=@id", conn);
@@ -230,7 +230,7 @@ namespace InventoryTracker.Models
             {
                 conn.Dispose();
             }
-            
+
             return count;
         }
 
@@ -279,7 +279,7 @@ namespace InventoryTracker.Models
                 name = rdr.GetString(1);
                 id = rdr.GetInt32(0);
                 Dish newDish = new Dish(name, id);
-                allDishes.Add(newDish); 
+                allDishes.Add(newDish);
             }
             conn.Close();
             if(conn!=null)
