@@ -2,24 +2,23 @@
 @{
     Layout="_Layout";
 }
-<div id="four" class="container">
-  <div class="row">
       <div class="col-md-12">
-        <a href="#"><div class="well long">
-            <h1>@Model["dish"].GetName()</h1>
-        </div></a>
-        <form action="/dishes/@Model["dish"].GetId()/edit">
-            <button>Edit</button>
-        </form>
+            <div class="well long">
+                <h1>@Model["dish"].GetName()</h1>
+                <form action='/dishes/@Model["dish"].GetId()/edit'>
+                    <button>Change Name</button>
+                </form>
+            </div></a>
+        
       </div>
   </div>
   <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
           <div class="well stacked">
               <h1></h1>
               @if(Model["all_ingredients"].Count == 0)
               {
-                <p>All ingredients are added</p>
+                <h4>Every ingredient have goes into @Model["dish"].GetName().ToLower()!</h4>
               }
               @if(Model["all_ingredients"].Count != 0)
               {
@@ -46,7 +45,7 @@
               <h1></h1>
           </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-6">
           <div class="well big">
               <h1></h1>
 
@@ -74,6 +73,5 @@
                     }
                 }
           </div>
-      </div>
+      
   </div>
-</div>

@@ -24,7 +24,7 @@ namespace InventoryTracker.Controllers
     [HttpPost("/orders")]
     public ActionResult Create(string tableNumber, DateTime orderDate)
     {
-        TableOrder newOrder = new TableOrder(tableNumber, orderDate);
+        TableOrder newOrder = new TableOrder(tableNumber, DateTime.Now);
         newOrder.Save();
         //TODO: redirect to add dish
         return RedirectToAction("Show", new { tableOrderId = newOrder.GetId() });

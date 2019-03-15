@@ -1,5 +1,7 @@
 .big{
-    height: 370px;
+    height: 350px;
+    width: 100%;
+
 }
 
 body{
@@ -46,3 +48,7 @@ td{
     padding-right: 10px;
 }
 
+.display{
+    
+    opacity:.3;
+}

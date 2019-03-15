@@ -3,24 +3,32 @@
     Layout="_Layout";
 }
 <div class="header">
-    <h1 class="title">Orders Index</h1>
+    <h1 class="title">All Orders</h1>
 </div>
-<div id="eleven" class="container">
-  <div class="row">
+<div class="row">
+  <div class="col-md-3">
 
-  @if(Model.Count == 0)
-  {
-    <p>No orders</p>
-  }
-  @if(Model.Count != 0)
-  {
-    @foreach(TableOrder tableOrder in Model)
+  </div>
+  <div class="col-md-5">
+    @if(Model.Count == 0)
     {
-      <p><a href="/orders/@tableOrder.GetId()">Table number @tableOrder.GetTableNumber() @tableOrder.GetOrderDate().ToString("dd MMMM yyyy")</a></p>
+      <h4>No orders</h4>
     }
-  }
+    @if(Model.Count != 0)
+    {
+      @foreach(TableOrder tableOrder in Model)
+      {
+        <p><a href="/orders/@tableOrder.GetId()">Table number @tableOrder.GetTableNumber() @tableOrder.GetOrderDate().ToString("dd MMMM yyyy")</a></p>
+      }
+    }
   </div>
-  <div class="row">
-    <p><a href="/orders/new">New order<a></p>
+  <div class="col-md-4">
+    <a href="/orders/new"><div class="well link"><p>New Order</p></div></a>
   </div>
+  
 </div>
+<div class="row">
+ 
+  
+</div>
+

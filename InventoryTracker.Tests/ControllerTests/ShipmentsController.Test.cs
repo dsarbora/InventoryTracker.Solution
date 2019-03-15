@@ -55,7 +55,7 @@ namespace InventoryTracker.Tests
             ShipmentsController controller = new ShipmentsController();
             ViewResult editView = controller.Edit(shipment.GetId()) as ViewResult;
             var result = editView.ViewData.Model;
-            Assert.IsInstanceOfType(result, typeof(Shipment));
+            Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
         [TestMethod]
         public void ShowView_ReturnsViewResult_True()

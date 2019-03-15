@@ -1,80 +1,77 @@
 @using InventoryTracker.Models
 @{
-    Layout="_Layout";
+Layout="_Layout";
 }
-<div id="thirteen" class="container">
-  <div class="row">
-      <div class="col-md-12">
-        <div class="well long">
-            <h1>Table number @Model["order"].GetTableNumber() @Model["order"].GetOrderDate()</h1>
+
+<div class="row">
+    <div class="col-md-12">
+    <div class="well long">
+        <h1>Table number @Model["order"].GetTableNumber() @Model["order"].GetOrderDate()</h1>
+    </div>
+    <form action="/orders/@Model["order"].GetId()/edit">
+        <button>Edit</button>
+    </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="well stacked">
+            <h1></h1>
         </div>
-        <form action="/orders/@Model["order"].GetId()/edit">
-            <button>Edit</button>
-        </form>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-md-4">
-          <div class="well stacked">
-              <h1></h1>
-          </div>
-          <div class="well stacked">
-              <h1></h1>
-          </div>
-          <div class="well stacked">
-              <h1></h1>
-          </div>
-      </div>
-      <div class="col-md-8">
-            <div class="well big">
-                <h1></h1>
-                @if(Model["all_dishes"].Count == 0)
-                {
-                  <p>All dishes are in the order.</p>
-                }
-                @if(Model["all_dishes"].Count != 0)
-                {
-                  <form action="/orders/@Model["order"].GetId()/dishes" method="post">
+        <div class="well stacked">
+            <h1></h1>
+        </div>
+        <div class="well stacked">
+            <h1></h1>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="well big">
+            <h1></h1>
+            @if(Model["all_dishes"].Count == 0)
+            {
+                <p>All dishes are in the order.</p>
+            }
+            @if(Model["all_dishes"].Count != 0)
+            {
+                <form action="/orders/@Model["order"].GetId()/dishes" method="post">
 
-                    <label for="dishId">Add dish</label>
-                    <select id="dishId" name="dishId">
-                        @foreach(Dish dish in Model["all_dishes"])
-                        {
-                            <option value="@dish.GetId()">@dish.GetName()</option>
-                        }
-                    </select>
-                    <label for="newDishQuantity">Quantity</label>
-                    <input id="newDishQuantity" name="newDishQuantity" type="number" value="1" required>
-
-                    <button type="submit">Add</button>
-                  </form>
-                }
-
-                @if(Model["order_dishes"].Count == 0)
-                {
-                    <p>No orders</p>
-                }
-                @if(Model["order_dishes"].Count != 0)
-                {
-                    @foreach(DishQuantity dish in Model["order_dishes"])
+                <label for="dishId">Add dish</label>
+                <select id="dishId" name="dishId">
+                    @foreach(Dish dish in Model["all_dishes"])
                     {
-                        <br>
-                        <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
-                            <p>Dish: @dish.GetDish().GetName()</p>
-                            <label for="quantity">Quantity</label>
-                            <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
-                            <br>
-                            <button type="submit">Edit quantity</button>
-                        </form>
-                        <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/delete" method="post">
-
-                            <button type="submit">Delete</button>
-                        </form>
+                        <option value="@dish.GetId()">@dish.GetName()</option>
                     }
+                </select>
+                <label for="newDishQuantity">Quantity</label>
+                <input id="newDishQuantity" name="newDishQuantity" type="number" value="1" required>
+
+                <button type="submit">Add</button>
+                </form>
+            }
+
+            @if(Model["order_dishes"].Count == 0)
+            {
+                <p>No orders</p>
+            }
+            @if(Model["order_dishes"].Count != 0)
+            {
+                @foreach(DishQuantity dish in Model["order_dishes"])
+                {
+                    <br>
+                    <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
+                        <p>Dish: @dish.GetDish().GetName()</p>
+                        <label for="quantity">Quantity</label>
+                        <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
+                        <br>
+                        <button type="submit">Edit quantity</button>
+                    </form>
+                    <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/delete" method="post">
+
+                        <button type="submit">Delete</button>
+                    </form>
                 }
-          </div>
-      </div>
-  </div>
-    <p><a href="/orders">Back to Orders</a></p>
-    <p><a href="/">Back to Home page</a></p>
+            }
+        </div>
+    </div>
 </div>
