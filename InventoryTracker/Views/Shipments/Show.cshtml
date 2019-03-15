@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-md-4">
         <div class="well stacked">
-        <form action='/shipments/@Model["shipment"].GetId()/ingredients/new' method="post">
+        <form action='/shipments/@Model["shipment"].GetId()/ingredients/add' method="post">
             <label for="ingredientId">Add Ingredient</label>
             <select id="ingredientId" name="ingredientId">
             @foreach(Ingredient ingredient in Model["allIngredients"])

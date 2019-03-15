@@ -66,6 +66,13 @@ namespace InventoryTracker.Controllers
           newShipment.AddIngredient(ingredientId, quantity);
           return RedirectToAction("Edit", new {id=newShipment.GetId()});
         }
+        [HttpPost("/shipments/{shipmentId}/ingredients/add")]
+        public ActionResult AddIngredientQuantity(int shipmentId, int ingredientId, int quantity)
+        {
+          Shipment newShipment = Shipment.Find(shipmentId);
+          newShipment.AddIngredient(ingredientId, quantity);
+          return RedirectToAction("Show", new {id=newShipment.GetId()});
+        }
 
         [HttpPost("/shipments/{shipmentId}/ingredients/delete")]
         public ActionResult DeleteIngredient(int shipmentId, int ingredientId)
