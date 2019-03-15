@@ -47,7 +47,7 @@ namespace InventoryTracker.Models
             List<TableOrder> allOrders = new List<TableOrder>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM table_orders", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM table_orders ORDER BY order_date", conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
             int id = 0;
             string tableNumber = "";
@@ -158,7 +158,7 @@ namespace InventoryTracker.Models
         {
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            // 
+            //
             MySqlCommand cmd = new MySqlCommand("INSERT INTO orders (dish_id, table_order_id, dish_quantity) VALUES (@dish_id, @id, @quantity); UPDATE ingredients ing INNER JOIN (SELECT i_d.ingredient_id AS ingredient_id, i_d.ingredient_quantity * (dish_quantity) AS total FROM ingredients_dishes i_d JOIN orders ON i_d.dish_id=orders.dish_id WHERE table_order_id=@id and orders.dish_id=@dish_id) ord ON ing.id=ord.ingredient_id SET ing.quantity = ing.quantity - ord.total;", conn);
             MySqlParameter prmDishId = new MySqlParameter("@dish_id", dishId);
             cmd.Parameters.Add(prmDishId);
@@ -240,7 +240,7 @@ namespace InventoryTracker.Models
             MySqlConnection conn = DB.Connection();
             conn.Open();
             //MySqlCommand cmd = new MySqlCommand("SELECT dishes.* FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id", conn);
-            MySqlCommand cmd = new MySqlCommand("SELECT dishes.*, orders.dish_quantity FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT dishes.*, orders.dish_quantity FROM orders JOIN dishes ON (orders.dish_id=dishes.id) WHERE orders.table_order_id=@id ORDER BY dishes.name", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             string name = "";
@@ -269,7 +269,7 @@ namespace InventoryTracker.Models
             List<Dish> allDishes = new List<Dish>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM dishes WHERE id NOT IN (SELECT dish_id FROM orders WHERE table_order_id=@id)", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM dishes WHERE id NOT IN (SELECT dish_id FROM orders WHERE table_order_id=@id ORDER BY name)", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             string name = "";

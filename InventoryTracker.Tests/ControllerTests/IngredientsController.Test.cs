@@ -10,6 +10,10 @@ namespace InventoryTracker.Tests
     [TestClass]
     public class IngredientsControllerTest : IDisposable
     {
+        public IngredientsControllerTest()
+        {
+            DBConfiguration.ConnectionString = "server=localhost;user id=root; password=root;port=8889;database=restaurant_test;";
+        }
         public void Dispose()
         {
             Ingredient.ClearAll();
@@ -17,7 +21,7 @@ namespace InventoryTracker.Tests
             Shipment.ClearAll();
             TableOrder.ClearAll();
         }
-        
+
         [TestMethod]
         public void Index_ReturnsViewResult_True()
         {
@@ -67,7 +71,7 @@ namespace InventoryTracker.Tests
             Assert.IsInstanceOfType(result, typeof(Dictionary<string, object>));
         }
 
-        
+
 
     }
 }

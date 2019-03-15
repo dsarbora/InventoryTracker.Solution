@@ -42,7 +42,7 @@ namespace InventoryTracker.Models
             List<Dish> allDishes = new List<Dish>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM dishes", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM dishes ORDER BY name", conn);
             MySqlDataReader rdr = cmd.ExecuteReader();
             string name = "";
             int id = 0;
@@ -201,7 +201,7 @@ namespace InventoryTracker.Models
             List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT ingredients.*, in_d.ingredient_quantity FROM ingredients JOIN ingredients_dishes in_d ON (ingredients.id = in_d.ingredient_id) WHERE in_d.dish_id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT ingredients.*, in_d.ingredient_quantity FROM ingredients JOIN ingredients_dishes in_d ON (ingredients.id = in_d.ingredient_id) WHERE in_d.dish_id=@id ORDER BY ingredients.name", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             string name = "";
@@ -231,7 +231,7 @@ namespace InventoryTracker.Models
             List<Ingredient> allIngredients = new List<Ingredient>{};
             MySqlConnection conn = DB.Connection();
             conn.Open();
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredient_id FROM ingredients_dishes WHERE dish_id=@id);", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredient_id FROM ingredients_dishes WHERE dish_id=@id) ORDER BY name;", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", Id));
             MySqlDataReader rdr = cmd.ExecuteReader();
             while(rdr.Read())

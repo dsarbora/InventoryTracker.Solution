@@ -69,7 +69,7 @@ namespace InventoryTracker.Models
       List<Shipment> allShipments = new List<Shipment>{};
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("SELECT * FROM shipments", conn);
+      MySqlCommand cmd = new MySqlCommand("SELECT * FROM shipments ORDER BY shipment_date", conn);
       MySqlDataReader rdr= cmd.ExecuteReader();
       while(rdr.Read())
       {
@@ -117,7 +117,7 @@ namespace InventoryTracker.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_shipments (ingredient_id, shipment_id, quantity) VALUES (@ingredient_id, @shipment_id, @quantity);", conn);
+      MySqlCommand cmd = new MySqlCommand("INSERT INTO ingredients_shipments (ingredient_id, shipment_id, quantity) VALUES (@ingredient_id, @shipment_id, @quantity); UPDATE ingredients SET quantity=quantity+@quantity WHERE id=@ingredient_id;", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
       cmd.Parameters.Add(new MySqlParameter("@quantity", quantity));
@@ -148,7 +148,7 @@ namespace InventoryTracker.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("UPDATE ingredients_shipments SET quantity=@quantity WHERE shipment_id=@shipment_id AND ingredient_id=@ingredient_id;", conn);
+      MySqlCommand cmd = new MySqlCommand("UPDATE ingredients ing INNER JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id SET ing.quantity = ing.quantity - i_s.quantity + @quantity WHERE i_s.shipment_id=@shipment_id and ing.id=@ingredient_id; UPDATE ingredients_shipments SET quantity=@quantity WHERE shipment_id=@shipment_id AND ingredient_id=@ingredient_id;", conn);
       cmd.Parameters.Add(new MySqlParameter("@quantity", quantity));
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       cmd.Parameters.Add(new MySqlParameter("@ingredient_id", ingredientId));
@@ -165,7 +165,7 @@ namespace InventoryTracker.Models
       List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("SELECT ingredients.*, i_s.quantity FROM ingredients_shipments i_s JOIN ingredients ON (ingredients.id = i_s.ingredient_id) WHERE i_s.shipment_id=@shipment_id", conn);
+      MySqlCommand cmd = new MySqlCommand("SELECT ingredients.*, i_s.quantity FROM ingredients_shipments i_s JOIN ingredients ON (ingredients.id = i_s.ingredient_id) WHERE i_s.shipment_id=@shipment_id ORDER BY ingredients.name", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       MySqlDataReader rdr = cmd.ExecuteReader();
       while(rdr.Read())
@@ -190,7 +190,7 @@ namespace InventoryTracker.Models
       List<Ingredient> allPotentialIngredients = new List<Ingredient>{};
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredient_id FROM ingredients_shipments WHERE shipment_id=@shipment_id);", conn);
+      MySqlCommand cmd = new MySqlCommand("SELECT * FROM ingredients WHERE id NOT IN (SELECT ingredient_id FROM ingredients_shipments WHERE shipment_id=@shipment_id) ORDER BY ingredients.name;", conn);
       cmd.Parameters.Add(new MySqlParameter("@shipment_id", Id));
       MySqlDataReader rdr = cmd.ExecuteReader();
       while(rdr.Read())
@@ -198,7 +198,7 @@ namespace InventoryTracker.Models
         int id=rdr.GetInt32(0);
         string name=rdr.GetString(1);
         int quantity=rdr.GetInt32(2);
-    
+
         Ingredient newIngredient = new Ingredient(name, quantity, id);
         allPotentialIngredients.Add(newIngredient);
       }

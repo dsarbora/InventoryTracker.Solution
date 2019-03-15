@@ -46,13 +46,13 @@ namespace InventoryTracker.Tests
         public void GetTableOrderDate_ReturnsTableOrderDate_DateTime()
         {
             int id = 0;
-            string tableNumber = "4"; 
+            string tableNumber = "4";
             DateTime orderDate = Convert.ToDateTime("01/01/2019");
             TableOrder newOrder = new TableOrder(tableNumber, orderDate, id);
             DateTime result = newOrder.GetOrderDate();
             Assert.AreEqual(result, orderDate);
         }
-        
+
         [TestMethod]
         public void Equals_ChecksIfTwoOrdersAreTheSame_True()
         {
@@ -85,7 +85,7 @@ namespace InventoryTracker.Tests
             string newTableNumber = "5";
             DateTime newOrderDate = Convert.ToDateTime("02/02/2019");
             newOrder.Edit(newTableNumber, newOrderDate);
-            
+
             TableOrder testOrder = TableOrder.GetAll()[0];
             Assert.AreEqual(newOrder, testOrder);
         }
@@ -106,7 +106,7 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void Delete_DeletesOrderFromDatabase_EmptyList()
         {
-            string tableNumber = "4"; 
+            string tableNumber = "4";
             DateTime orderDate = Convert.ToDateTime("01/01/2019");
             TableOrder newOrder = new TableOrder(tableNumber, orderDate);
             newOrder.Save();
@@ -171,14 +171,14 @@ namespace InventoryTracker.Tests
 
             CollectionAssert.AreEqual(testList, result);
         }
-        
+
         [TestMethod]
         public void GetAllDishes_ReturnsOrder_DishQuantityList()
         {
-            Dish newDish = new Dish("Eggs and bacon");
+            Dish newDish = new Dish("Cesar Salad");
             newDish.Save();
             int dishId = newDish.GetId();
-            Dish newDish2 = new Dish("Cesar Salad");
+            Dish newDish2 = new Dish("Eggs and bacon");
             newDish2.Save();
             int dishId2 = newDish2.GetId();
             TableOrder newTableOrder = new TableOrder("4", Convert.ToDateTime("01/01/2019"));
@@ -188,9 +188,10 @@ namespace InventoryTracker.Tests
 
             List<DishQuantity> testList = new List<DishQuantity>{ new DishQuantity(newDish, 2), new DishQuantity(newDish2, 1) };
             List<DishQuantity> result = newTableOrder.GetAllDishes();
+            Console.WriteLine("{0} {1}", testList.Count, result.Count);
             Console.WriteLine("{0} {1}", testList[0].GetQuantity(), result[0].GetQuantity());
             Console.WriteLine("{0} {1}", testList[1].GetQuantity(), result[1].GetQuantity());
-            CollectionAssert.AreEqual(testList, result);
+            CollectionAssert.AreEquivalent(testList, result);
             //Assert.AreEqual(testList.Count, result.Count);
             //Assert.AreEqual(2, result[0].GetQuantity());
         }

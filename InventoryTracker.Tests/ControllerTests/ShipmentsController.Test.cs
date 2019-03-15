@@ -10,6 +10,10 @@ namespace InventoryTracker.Tests
     [TestClass]
     public class ShipmentsControllerTest : IDisposable
     {
+        public ShipmentsControllerTest()
+        {
+            DBConfiguration.ConnectionString = "server=localhost;user id=root; password=root;port=8889;database=restaurant_test;";
+        }
         public void Dispose()
         {
             Ingredient.ClearAll();
