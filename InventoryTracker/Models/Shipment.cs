@@ -174,8 +174,9 @@ namespace InventoryTracker.Models
         string name=rdr.GetString(1);
         int quantity = rdr.GetInt32(2);
         int shipmentQuantity = rdr.GetInt32(3);
-        Ingredient newIngredient = new Ingredient(name, quantity, id);
-        allIngredients.Add(new IngredientQuantity(newIngredient, shipmentQuantity));
+        Ingredient newIngredient = new Ingredient(name, quantity-shipmentQuantity, id);
+        IngredientQuantity ingredientQuantity = new IngredientQuantity(newIngredient, shipmentQuantity);
+        allIngredients.Add(ingredientQuantity);
       }
       conn.Close();
       if(conn!=null)
@@ -225,5 +226,9 @@ namespace InventoryTracker.Models
         return (idEquality && dateEquality);
       }
     }
+    public override int GetHashCode()
+        {
+            return this.GetId().GetHashCode();
+        }
   }
 }

@@ -196,6 +196,11 @@ namespace InventoryTracker.Models
             }
         }
 
+        public override int GetHashCode()
+        {
+            return this.GetId().GetHashCode();
+        }
+
         public List<IngredientQuantity> GetAllIngredients()
         {
             List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{};

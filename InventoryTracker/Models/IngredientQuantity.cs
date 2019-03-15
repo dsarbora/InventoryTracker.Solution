@@ -26,10 +26,14 @@ namespace InventoryTracker.Models
             else
             {
                 IngredientQuantity newIngredientQuantity = (IngredientQuantity)otherIngredientQuantity;
-                bool IngredientEquality = this.GetIngredient().Equals(newIngredientQuantity.GetIngredient());
+                bool IngredientEquality =this.GetIngredient().Equals(newIngredientQuantity.GetIngredient());
                 bool quantityEquality = this.GetQuantity().Equals(newIngredientQuantity.GetQuantity());
                 return ( IngredientEquality && quantityEquality);
             }
+        }
+        public override int GetHashCode()
+        {
+            return this.GetIngredient().GetId().GetHashCode();
         }
     }
 }

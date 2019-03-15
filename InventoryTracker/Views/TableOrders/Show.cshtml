@@ -49,32 +49,34 @@ Layout="_Layout";
     </div>
     <div class="col-md-8">
         <div class="well big">
-            <h1></h1>
-            
-
             @if(Model["order_dishes"].Count == 0)
             {
                 <p>No orders</p>
             }
             @if(Model["order_dishes"].Count != 0)
             {
+                <div class="button-lineup">
                 @foreach(DishQuantity dish in Model["order_dishes"])
                 {
-                    <div class="button-lineup">
-                        <div class="left">
-                            <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
-                                <label for="quantity">@dish.GetDish().GetName()</label>
-                                <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
-                                <button class="edit" type="submit">Edit quantity</button>
-                            </form>
-                        </div>
-                        <div class="right">
-                            <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/delete" method="post">
-                                <button class="delete" type="submit">Delete</button>
-                            </form>
-                        </div>
+                    <div class="row">
+                        <div class="col-sm-11">
+                            <div class="left">
+                                <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
+                                    <label for="quantity">@dish.GetDish().GetName()</label>
+                                    <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
+                                    <button class="edit" type="submit">Edit quantity</button>
+                                </form>
+                            </div>
+                            <div class="right offset">
+                                <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/delete" method="post">
+                                    <button class="delete" type="submit">Delete</button>
+                                </form>
+                            </div>
+                        </div>    
                     </div>
+                      
                 }
+                </div>
             }
         </div>
     </div>

@@ -72,7 +72,7 @@ td{
     background-color: #e7a572
 }
 .button-lineup{
-    height: 100px;
+    height: 300px;
 }
 
 table{
@@ -88,6 +88,12 @@ table{
 
 .add{
     background-color: rgb(93, 165, 93);
+}
+
+.offset{
+    position: relative;
+    bottom: 20px;
+    right: 10px;
 }
 
 /* .title{
