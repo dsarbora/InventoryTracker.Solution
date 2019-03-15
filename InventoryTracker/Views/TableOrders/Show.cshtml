@@ -5,29 +5,24 @@ Layout="_Layout";
 
 <div class="row">
     <div class="col-md-12">
-    <div class="well long">
-        <h1>Table number @Model["order"].GetTableNumber() @Model["order"].GetOrderDate()</h1>
-    </div>
-    <form action='/orders/@Model["order"].GetId()/edit'>
-        <button>Edit</button>
-    </form>
+        <div class="well long">
+            <div class="left">
+                <h1>Table number @Model["order"].GetTableNumber() @Model["order"].GetOrderDate()</h1>
+            </div>
+            <div class="right">
+                <form action='/orders/@Model["order"].GetId()/edit'>
+                    <button class="edit">Edit</button>
+                </form>
+                <form action='orders/@Model["order"].GetId()/delete'>
+                    <button class="delete">Delete</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 <div class="row">
     <div class="col-md-4">
         <div class="well stacked">
-            <h1></h1>
-        </div>
-        <div class="well stacked">
-            <h1></h1>
-        </div>
-        <div class="well stacked">
-            <h1></h1>
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="well big">
-            <h1></h1>
             @if(Model["all_dishes"].Count == 0)
             {
                 <p>All dishes are in the order.</p>
@@ -46,9 +41,16 @@ Layout="_Layout";
                 <label for="newDishQuantity">Quantity</label>
                 <input id="newDishQuantity" name="newDishQuantity" type="number" value="1" required>
 
-                <button type="submit">Add</button>
+                <button class="add" type="submit">Add</button>
                 </form>
             }
+        </div>
+        
+    </div>
+    <div class="col-md-8">
+        <div class="well big">
+            <h1></h1>
+            
 
             @if(Model["order_dishes"].Count == 0)
             {
@@ -58,18 +60,20 @@ Layout="_Layout";
             {
                 @foreach(DishQuantity dish in Model["order_dishes"])
                 {
-                    <br>
-                    <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
-                        <p>Dish: @dish.GetDish().GetName()</p>
-                        <label for="quantity">Quantity</label>
-                        <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
-                        <br>
-                        <button type="submit">Edit quantity</button>
-                    </form>
-                    <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/delete" method="post">
-
-                        <button type="submit">Delete</button>
-                    </form>
+                    <div class="button-lineup">
+                        <div class="left">
+                            <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()" method="post">
+                                <label for="quantity">@dish.GetDish().GetName()</label>
+                                <input id="quantity" name="quantity" type="number" value="@dish.GetQuantity()"required>
+                                <button class="edit" type="submit">Edit quantity</button>
+                            </form>
+                        </div>
+                        <div class="right">
+                            <form action="/orders/@Model["order"].GetId()/dishes/@dish.GetDish().GetId()/delete" method="post">
+                                <button class="delete" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
                 }
             }
         </div>

@@ -3,28 +3,33 @@
     Layout="_Layout";
 }
 <div class="header">
+    <a class="left left-center" href='/shipments/@Model["shipment"].GetId()'><button>Done</button></a>
     <h1 class="title">Edit Shipment</h1>
 </div>
-
+<div class="row">
+  
+</div>
 <div class="row">
   <div class="col-md-1">
 
   </div>
   <div class="col-md-5">
+    <h4><u>Add Ingredient</u></h4>
     @foreach(Ingredient ingredient in Model["potentialIngredients"])
     {
       <form action='/shipments/@Model["shipment"].GetId()/ingredients/new' method="post">
         <input type="hidden" name="ingredientId" id="ingredientId" value=@ingredient.GetId()>
-        <button type="submit" class="btn btn-success">@ingredient.GetName()</button>
+        <button type="submit" class=" seperated btn btn-success">@ingredient.GetName()</button>
       </form>
       }
   </div>
   <div class="col-md-5">
+    <h4><u>Remove Ingredient</u></h4>
     @foreach(Ingredient ingredient in Model["shipmentIngredients"])
     {
       <form action='/shipments/@Model["shipment"].GetId()/ingredients/delete' method="post">
         <input type="hidden" name="ingredientId" id="ingredidientId" value="@ingredient.GetId()">
-        <button type="submit" class="btn btn-danger">@ingredient.GetName()</button>
+        <button type="submit" class="seperated btn btn-danger">@ingredient.GetName()</button>
       </form>
     }
   </div>
@@ -32,7 +37,5 @@
 
   </div>
 </div>
-<div class="row">
 
-</div>
 

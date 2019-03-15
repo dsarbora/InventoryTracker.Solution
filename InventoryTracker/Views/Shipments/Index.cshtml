@@ -7,17 +7,19 @@
 </div>
 
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-4">
+    
+  </div>
+  <div class="col-md-5">
+    <div class="list">
     @foreach(Shipment shipment in Model)
       {
         <p><a href="/shipments/@shipment.GetId()">@shipment.GetId(): @shipment.GetDate()</a></p>
       }
-  </div>
-  <div class="col-md-6">
-    
+    </div>
   </div>
   <div class="col-md-3">
-    <p><a class="well link" href="/shipments/new">Add a new shipment</a></p>
+    <a href="/shipments/new"><div class="well link">Add a new shipment</div></a>
   </div>
   
 </div>
