@@ -25,7 +25,7 @@ namespace InventoryTracker.Controllers
         {
             Dictionary<string, object> model = new Dictionary<string, object>();
             Shipment newShipment = Shipment.Find(id);
-            List<Ingredient> allIngredients = Ingredient.GetAll();
+            List<Ingredient> allIngredients = newShipment.GetPotentialIngredients();
             List<IngredientQuantity> shipmentIngredients = newShipment.GetAllIngredients();
             model.Add("shipment", newShipment);
             model.Add("allIngredients", allIngredients);
@@ -37,7 +37,17 @@ namespace InventoryTracker.Controllers
         public ActionResult Edit(int id)
         {
           Shipment shipment = Shipment.Find(id);
-            return View(shipment);
+          List<Ingredient> shipmentIngredients = new List<Ingredient>{};
+          foreach(IngredientQuantity ingredientQ in shipment.GetAllIngredients())
+          {
+            shipmentIngredients.Add(ingredientQ.GetIngredient());
+          }
+          List<Ingredient> allPotentialIngredients = shipment.GetPotentialIngredients();
+          Dictionary<string, object> model = new Dictionary<string, object>();
+          model.Add("shipment", shipment);
+          model.Add("shipmentIngredients", shipmentIngredients);
+          model.Add("potentialIngredients", allPotentialIngredients);
+          return View(model);
         }
 
         [HttpPost("/shipments/create")]
@@ -48,14 +58,22 @@ namespace InventoryTracker.Controllers
             return RedirectToAction("Show", new {id=newShipment.GetId()});
         }
         
-        [HttpPost("/shipments/{shipmentId}/add_ingredient")]
-        public ActionResult AddIngredient(int shipmentId, int ingredientId)
+        [HttpPost("/shipments/{shipmentId}/ingredients/new")]
+        
+        public ActionResult AddIngredient(int shipmentId, int ingredientId, int quantity)
         {
           Shipment newShipment = Shipment.Find(shipmentId);
-          newShipment.AddIngredient(ingredientId, 0);
-          return RedirectToAction("Show", new {id=newShipment.GetId()});
+          newShipment.AddIngredient(ingredientId, quantity);
+          return RedirectToAction("Edit", new {id=newShipment.GetId()});
         }
 
+        [HttpPost("/shipments/{shipmentId}/ingredients/delete")]
+        public ActionResult DeleteIngredient(int shipmentId, int ingredientId)
+        {
+          Shipment newShipment = Shipment.Find(shipmentId);
+          newShipment.DeleteIngredient(ingredientId);
+          return RedirectToAction("Edit", new{id=shipmentId});
+        }
         [HttpPost("/shipments/{shipmentId}/ingredients/{ingredientId}/edit")]
         public ActionResult UpdateIngredient(int shipmentId, int ingredientId, int quantity)
         {

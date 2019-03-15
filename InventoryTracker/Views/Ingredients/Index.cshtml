@@ -5,45 +5,40 @@
 <div class="header">
     <h1 class="title">All Ingredients</h1>
 </div>
-<div id="seven" class="container">
-  <div class="row">
-    <a href="/ingredients/new" class="btn btn-info">Add new Ingredient</a>
-  </div>
-  <div class="row">
-    <div class="col-md-2">
+<div class="row">
+  <div class="col-md-2">
 
-    </div>
-    <div class="col-md-9">
-      <table>
+  </div>
+  <div class="col-md-7">
+    <table>
+      <tr>
+        <td><p><strong>Ingredient</strong></p></td>
+        <td><p><strong>Quantity</strong></p></td>
+        <!-- <td><p>Edit</p></td>
+        <td><p>Delete</p></td> -->
+  
+      </tr>
+      @foreach(Ingredient ingredient in Model)
+      {
         <tr>
-          <td><p>Ingredient</p></td>
-          <td><p>Quantity</p></td>
-          <!-- <td><p>Edit</p></td>
-          <td><p>Delete</p></td> -->
-    
+          <td><p>@ingredient.GetName()</p></td>
+          <td><p>@ingredient.GetQuantity()</p></td>
+          <!-- <td>
+            <form action='ingredients/@ingredient.GetId()/update' method="post">
+              <input name="quantity" id="quantity" value='@ingredient.GetQuantity()' required type="number">
+              <button type="submit">Edit</button>
+            </form>
+          <td>
+            <form action='ingredients/@ingredient.GetId()/delete' method="post">
+              <button type="submit">Delete</button>
+            </form>
+          </td> -->
+        
         </tr>
-        @foreach(Ingredient ingredient in Model)
-        {
-          <tr>
-            <td><p>@ingredient.GetName()</p></td>
-            <td><p>@ingredient.GetQuantity()</p></td>
-            <!-- <td>
-              <form action='ingredients/@ingredient.GetId()/update' method="post">
-                <input name="quantity" id="quantity" value='@ingredient.GetQuantity()' required type="number">
-                <button type="submit">Edit</button>
-              </form>
-            <td>
-              <form action='ingredients/@ingredient.GetId()/delete' method="post">
-                <button type="submit">Delete</button>
-              </form>
-            </td> -->
-          
-          </tr>
-        }
-      </table>
-    </div>
-    <div class="col-md-1">
-      
-    </div>
+      }
+    </table>
+  </div>
+  <div class="col-md-3">
+    <a href="/ingredients/new" class="well link right">Add new Ingredient</a>
   </div>
 </div>
