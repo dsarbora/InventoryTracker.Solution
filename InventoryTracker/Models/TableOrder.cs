@@ -153,6 +153,10 @@ namespace InventoryTracker.Models
                 return (idEquality && dateEquality && tableNumberEquality);
             }
         }
+        public override int GetHashCode()
+        {
+            return this.GetId().GetHashCode();
+        }
 
         public void AddDish(int dishId, int quantity)
         {

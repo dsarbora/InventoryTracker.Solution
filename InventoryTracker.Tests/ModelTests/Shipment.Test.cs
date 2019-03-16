@@ -67,7 +67,7 @@ namespace InventoryTracker.Tests
             List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{new IngredientQuantity(newIngredient, 5), new IngredientQuantity(newIngredient2, 5)};
             List<IngredientQuantity> testList = shipment.GetAllIngredients();
             Console.WriteLine("{0} {1}", allIngredients[0].GetQuantity(), testList[0].GetQuantity());
-            CollectionAssert.AreEqual (allIngredients, testList);
+            CollectionAssert.AreEquivalent (allIngredients, testList);
         }
 
         [TestMethod]
@@ -80,10 +80,20 @@ namespace InventoryTracker.Tests
             newIngredient.Save();
             Ingredient newIngredient2 = new Ingredient("carrots");
             newIngredient2.Save();
+            IngredientQuantity celery = new IngredientQuantity(newIngredient, 5);
+            IngredientQuantity carrots = new IngredientQuantity(newIngredient2, 5);
             shipment.AddIngredient(newIngredient.GetId(), 5);
             shipment.AddIngredient(newIngredient2.GetId(), 5);
-            List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{new IngredientQuantity(newIngredient, 5), new IngredientQuantity(newIngredient2, 5)};
+            List<IngredientQuantity> allIngredients = new List<IngredientQuantity>{carrots, celery};
             List<IngredientQuantity> testList = shipment.GetAllIngredients();
+            foreach(IngredientQuantity ing in allIngredients)
+            {
+                Console.WriteLine("allingredients {0} type {1} ingredient {2} quantity {3}", allIngredients.Count, ing.GetIngredient().GetType(), ing.GetIngredient().GetName(), ing.GetQuantity());
+            }
+            foreach(IngredientQuantity ing in testList)
+            {
+                Console.WriteLine("testList {0} type {1} ingredient {2} quantity {3}", testList.Count, ing.GetIngredient().GetType(), ing.GetIngredient().GetName(), ing.GetQuantity());
+            }
             CollectionAssert.AreEqual (allIngredients, testList);
         }
 
@@ -119,7 +129,7 @@ namespace InventoryTracker.Tests
             shipment.AddIngredient(two.GetId(), 5);
             List<Ingredient> potentialIngredients = new List<Ingredient>{three, four};
             List<Ingredient> testList = shipment.GetPotentialIngredients();
-            CollectionAssert.AreEqual(potentialIngredients, testList);
+            CollectionAssert.AreEquivalent(potentialIngredients, testList);
 
 
             

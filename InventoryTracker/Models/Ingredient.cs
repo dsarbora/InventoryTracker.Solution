@@ -205,5 +205,9 @@ namespace InventoryTracker.Models
                 return (idEquality && nameEquality && quantityEquality);
             }
         }
+        public override int GetHashCode()
+        {
+            return this.GetId().GetHashCode();
+        }
     }
 }

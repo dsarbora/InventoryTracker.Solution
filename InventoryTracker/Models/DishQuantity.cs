@@ -31,5 +31,9 @@ namespace InventoryTracker.Models
                 return (dishEquality && quantityEquality);
             }
         }
+        public override int GetHashCode()
+        {
+            return this.GetDish().GetId().GetHashCode();
+        }
     }
 }
