@@ -49,7 +49,7 @@ restaurant and restaurant_test are identical in structure.
 |orders|ingredients_dishes|ingredients_shipments|
 |------|------------------|---------------------|
 |id    |id                |id                   |
-|table_order_id|ingredient_id|ingredient_id     | 
+|table_order_id|ingredient_id|ingredient_id     |
 |dish_id|dish_id          |shipment_id          |
 |      |ingredient_quantity|quantity
 
@@ -75,14 +75,24 @@ Download Mono and install.
 **Running the project**
 ----
 
-* _Clone the project from [https://github.com/dsarbora/HairSalon.Solution](https://github.com/dsarbora/HairSalon.Solution)
-* _Navigate in the command line to HairSalon.Solution/HairSalon.Test/_
+* _Clone the project from [https://github.com/dsarbora/InventoryTracker.Solution](https://github.com/dsarbora/InventoryTracker.Solution)
+
+* Export database into phpMyAdmin:
+* _Start MAMP and click Open WebStart page in the MAMP window._
+* _In the website you're taken to, select phpMyAdmin from the Tools dropdown._
+* _Select the Import tab._
+* _Note that it's important to make sure you're not importing to a database that already exists, so make sure that a database with the same name as the one you're importing isn't already present._
+* _Select your restaurant.sql file, and click Go._
+* _Do the same for restaurant_file.sql to restore test database._
+
+* _Navigate in the command line to InventoryTracker.Solution/InventoryTracker.Test/_
 * _Use the command **$dotnet restore** to import the packages used for this project._
 * _To run the tests, use the command **$dotnet test.**_
-* _To run the program, navigate in the command line to HairSalon.Solution/HairSalon._
+* _To run the program, navigate in the command line to InventoryTracker.Solution/InventoryTracker._
 * _If not not previously restored, use the command **$dotnet restore,** followed by **$dotnet build,** and then **$dotnet run** to run the program in browser.
 * _Unzip the databases._
 * _Navigate to http://localhost:5000/ in your web browser._
+
 ## _Technologies Used_
 * _C#_
 * _HTML & CSS_
@@ -96,7 +106,7 @@ Download Mono and install.
 
 *MIT*
 
-Copyright (c) 2019 **_Yulia ShidLovskaya and Dave Sarbora, Jimmy Zebroski, Jasmine Lee, and Jared Hanson_**
+Copyright (c) 2019 **_Yulia ShidLovskaya, Dave Sarbora, Jimmy Zebroski, Jasmine Lee, and Jared Hanson_**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
