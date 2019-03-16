@@ -23,17 +23,17 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void Find_GetsById_Shipment()
         {
-            DateTime orderDate = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             shipment.Save();
             Shipment newShipment = Shipment.Find(shipment.GetId());
-            Assert.AreEqual(shipment, newShipment);            
+            Assert.AreEqual(shipment, newShipment);
         }
 
         [TestMethod]
         public void ShipmentConstructor_AssignsDate_DateTime()
         {
-            DateTime orderDate = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             shipment.Save();
             Assert.AreEqual(orderDate, shipment.GetDate());
@@ -41,11 +41,11 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void GetAll_GetsAllShipments_ShipmentList()
         {
-            DateTime orderDate = Convert.ToDateTime("3/5/2019");
-            DateTime orderDate2 = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate = new DateTime(2019, 3, 5);
+            DateTime orderDate2 = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             shipment.Save();
-            Shipment shipment2 = new Shipment(orderDate);
+            Shipment shipment2 = new Shipment(orderDate2);
             shipment2.Save();
             List<Shipment> allShipments = new List<Shipment>{shipment, shipment2};
             List<Shipment> testList = Shipment.GetAll();
@@ -55,7 +55,7 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void AddIngredient_AddsIngredientToShipment_IngredientList()
         {
-            DateTime orderDate = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             shipment.Save();
             Ingredient newIngredient = new Ingredient("celery");
@@ -73,7 +73,7 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void GetShipmentIngredients_GetsIngredients_IngredientList()
         {
-            DateTime orderDate = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             shipment.Save();
             Ingredient newIngredient = new Ingredient("celery");
@@ -100,7 +100,7 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void DeleteIngredients_DeletesIngredientFromShipment_EmptyList()
         {
-            DateTime orderDate = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             shipment.Save();
             Ingredient newIngredient = new Ingredient("celery");
@@ -115,15 +115,15 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void GetPotentialIngredients_GetsOnlyPotentialIngredients_IngredientList()
         {
-            Shipment shipment = new Shipment(Convert.ToDateTime("3/12/2019"));
+            Shipment shipment = new Shipment(new DateTime(2019, 3, 12));
             Ingredient one = new Ingredient("celery");
             Ingredient two = new Ingredient("carrots");
             Ingredient three = new Ingredient("juice");
             Ingredient four = new Ingredient("carrot juice");
-            shipment.Save(); 
-            one.Save(); 
-            two.Save(); 
-            three.Save(); 
+            shipment.Save();
+            one.Save();
+            two.Save();
+            three.Save();
             four.Save();
             shipment.AddIngredient(one.GetId(), 5);
             shipment.AddIngredient(two.GetId(), 5);
@@ -132,7 +132,7 @@ namespace InventoryTracker.Tests
             CollectionAssert.AreEquivalent(potentialIngredients, testList);
 
 
-            
+
         }
 
     }

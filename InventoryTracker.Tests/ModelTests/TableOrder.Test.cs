@@ -25,7 +25,7 @@ namespace InventoryTracker.Tests
         {
             int id = 0;
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newTableOrder = new TableOrder(tableNumber, orderDate, id);
             int result = newTableOrder.GetId();
             Assert.AreEqual(result, id);
@@ -36,7 +36,7 @@ namespace InventoryTracker.Tests
         {
             int id = 0;
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newTableOrder = new TableOrder(tableNumber, orderDate, id);
             string result = newTableOrder.GetTableNumber();
             Assert.AreEqual(result, tableNumber);
@@ -47,7 +47,7 @@ namespace InventoryTracker.Tests
         {
             int id = 0;
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newOrder = new TableOrder(tableNumber, orderDate, id);
             DateTime result = newOrder.GetOrderDate();
             Assert.AreEqual(result, orderDate);
@@ -57,7 +57,7 @@ namespace InventoryTracker.Tests
         public void Equals_ChecksIfTwoOrdersAreTheSame_True()
         {
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder firstOrder = new TableOrder(tableNumber, orderDate);
             TableOrder secondOrder = new TableOrder(tableNumber, orderDate);
             Assert.AreEqual(firstOrder, secondOrder);
@@ -67,7 +67,7 @@ namespace InventoryTracker.Tests
         public void Save_SavesOrderToDatabase_Order()
         {
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newOrder = new TableOrder(tableNumber, orderDate);
             newOrder.Save();
 
@@ -79,11 +79,11 @@ namespace InventoryTracker.Tests
         public void Edit_EditsOrderInDatabase_Order()
         {
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newOrder = new TableOrder(tableNumber, orderDate);
             newOrder.Save();
             string newTableNumber = "5";
-            DateTime newOrderDate = Convert.ToDateTime("02/02/2019");
+            DateTime newOrderDate = new DateTime(2019, 3, 5);
             newOrder.Edit(newTableNumber, newOrderDate);
 
             TableOrder testOrder = TableOrder.GetAll()[0];
@@ -94,7 +94,7 @@ namespace InventoryTracker.Tests
         public void Find_FindsOrderInDatabase_Order()
         {
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newOrder = new TableOrder(tableNumber, orderDate);
             newOrder.Save();
 
@@ -107,7 +107,7 @@ namespace InventoryTracker.Tests
         public void Delete_DeletesOrderFromDatabase_EmptyList()
         {
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             TableOrder newOrder = new TableOrder(tableNumber, orderDate);
             newOrder.Save();
             newOrder.Delete();
@@ -120,11 +120,11 @@ namespace InventoryTracker.Tests
         public void GetAll_ReturnsAllOrdersFromDatabase_OrderList()
         {
             string firstTableNumber = "4";
-            DateTime firstOrderDate = Convert.ToDateTime("01/01/2019");
+            DateTime firstOrderDate = new DateTime(2019, 3, 12);
             TableOrder firstOrder = new TableOrder(firstTableNumber, firstOrderDate);
             firstOrder.Save();
             string secondTableNumber = "5";
-            DateTime secondOrderDate = Convert.ToDateTime("02/02/2019");
+            DateTime secondOrderDate = new DateTime(2019, 3, 12);
             TableOrder secondOrder = new TableOrder(secondTableNumber, secondOrderDate);
             secondOrder.Save();
 
@@ -138,7 +138,7 @@ namespace InventoryTracker.Tests
         {
             string name = "Eggs and Bacon";
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Dish newDish = new Dish(name);
             newDish.Save();
             int dishId = newDish.GetId();
@@ -157,7 +157,7 @@ namespace InventoryTracker.Tests
         {
             string name = "Eggs and Bacon";
             string tableNumber = "4";
-            DateTime orderDate = Convert.ToDateTime("01/01/2019");
+            DateTime orderDate = new DateTime(2019, 3, 12);
             Dish newDish = new Dish(name);
             newDish.Save();
             int dishId = newDish.GetId();
@@ -181,7 +181,7 @@ namespace InventoryTracker.Tests
             Dish newDish2 = new Dish("Eggs and bacon");
             newDish2.Save();
             int dishId2 = newDish2.GetId();
-            TableOrder newTableOrder = new TableOrder("4", Convert.ToDateTime("01/01/2019"));
+            TableOrder newTableOrder = new TableOrder("4", new DateTime(2019, 3, 12));
             newTableOrder.Save();
             newTableOrder.AddDish(dishId, 2);
             newTableOrder.AddDish(dishId2, 1);

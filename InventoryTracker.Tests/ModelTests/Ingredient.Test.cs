@@ -66,9 +66,9 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void GetShipments_GetsAllIngredientShipments_ShipmentList()
         {
-            DateTime orderDate = Convert.ToDateTime("2/26/2019");
-            DateTime orderDate2 = Convert.ToDateTime("3/5/2019");
-            DateTime orderDate3 = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate =  new DateTime(2019, 2, 26);
+            DateTime orderDate2 = new DateTime(2019, 3, 5);
+            DateTime orderDate3 = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             Shipment shipment2 = new Shipment(orderDate2);
             Shipment shipment3 = new Shipment(orderDate3);
@@ -87,9 +87,9 @@ namespace InventoryTracker.Tests
         [TestMethod]
         public void GetShipments_OrdersByDate_ShipmentList()
         {
-            DateTime orderDate = Convert.ToDateTime("2/26/2019");
-            DateTime orderDate2 = Convert.ToDateTime("3/5/2019");
-            DateTime orderDate3 = Convert.ToDateTime("3/12/2019");
+            DateTime orderDate =  new DateTime(2019, 2, 26);
+            DateTime orderDate2 = new DateTime(2019, 3, 5);
+            DateTime orderDate3 = new DateTime(2019, 3, 12);
             Shipment shipment = new Shipment(orderDate);
             Shipment shipment2 = new Shipment(orderDate2);
             Shipment shipment3 = new Shipment(orderDate3);
