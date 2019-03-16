@@ -15,6 +15,7 @@ CREATE TABLE table_orders (id serial PRIMARY KEY, table_number VARCHAR(10), orde
 -- ALTER TABLE `orders` ADD `dish_quantity` INT NOT NULL AFTER `dish_id`;
 CREATE TABLE orders (id serial PRIMARY KEY, table_order_id int, dish_id int, dish_quantity INT);
 
+ALTER TABLE `table_orders` CHANGE `order_date` `order_date` DATETIME NULL DEFAULT NULL;
 
 
 -- DON'T RUN : THAT'S ONLY FOR TESTING ------
@@ -44,14 +45,16 @@ UPDATE / DELETE orders...;
 -------------- SHIPMENTS ------------
 
 -- On insert
-UPDATE ingredients ing INNER JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id WHERE i_s.shipment_id=@id SET ing.quantity = ing.quantity + i_s.quantity;
-
 SELECT * FROM ingredients ing Inner JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id WHERE i_s.shipment_id=1@id
+
+
+UPDATE ingredients ing INNER JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id
+SET ing.quantity = ing.quantity + i_s.quantity WHERE i_s.shipment_id=1
 
 UPDATE ingredients ing
 INNER JOIN ingredients_shipments i_s ON ing.id=i_s.ingredient_id
-WHERE i_s.shipment_id=1
 SET ing.quantity = ing.quantity + i_s.quantity
+WHERE i_s.shipment_id=1
 
 
 UPDATE
